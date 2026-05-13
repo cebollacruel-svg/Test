@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>MEP Listening Practice</title>
+<title>MEP Listening Practice - Budgeting</title>
 <style>
 body{
     font-family: Arial, Helvetica, sans-serif;
@@ -98,13 +98,13 @@ button:disabled{
 
 <div class="header">MINISTERIO DE EDUCACIÓN PÚBLICA</div>
 <div class="subheader">
-English Listening Practice Test
+English Listening Practice Test - Budgeting (B1 Level)
 </div>
 
 <div class="wrapper">
 
 <div class="section">
-<p><strong>Instructions:</strong> Listen to the recording. You can play it only four times. Then choose the correct answer.</p>
+<p><strong>Instructions:</strong> Listen to the recording about Anna and her budget. You can play it only four times. Then choose the correct answer for each question.</p>
 
 <div class="audio-box">
 <audio id="audio">
@@ -121,43 +121,67 @@ English Listening Practice Test
 <div class="section">
 
 <div class="question">
-<p><strong>1.</strong> What is the speaker mainly talking about?</p>
-<div class="option"><input type="radio" name="q1" value="a"> School activities</div>
-<div class="option"><input type="radio" name="q1" value="b"> Personal experience</div>
-<div class="option"><input type="radio" name="q1" value="c"> Transportation</div>
+<p><strong>1.</strong> What is the main topic of the audio?</p>
+<div class="option"><input type="radio" name="q1" value="a"> How to earn more money</div>
+<div class="option"><input type="radio" name="q1" value="b"> How to make and use a budget</div>
+<div class="option"><input type="radio" name="q1" value="c"> How to open a bank account</div>
 <div class="feedback" id="fb1"></div>
 </div>
 
 <div class="question">
-<p><strong>2.</strong> Who is probably speaking?</p>
-<div class="option"><input type="radio" name="q2" value="a"> Student</div>
-<div class="option"><input type="radio" name="q2" value="b"> Teacher</div>
-<div class="option"><input type="radio" name="q2" value="c"> Visitor</div>
+<p><strong>2.</strong> How much money does Anna receive each week?</p>
+<div class="option"><input type="radio" name="q2" value="a"> $15</div>
+<div class="option"><input type="radio" name="q2" value="b"> $40</div>
+<div class="option"><input type="radio" name="q2" value="c"> $50</div>
 <div class="feedback" id="fb2"></div>
 </div>
 
 <div class="question">
-<p><strong>3.</strong> Where does the conversation most likely happen?</p>
-<div class="option"><input type="radio" name="q3" value="a"> At home</div>
-<div class="option"><input type="radio" name="q3" value="b"> At school</div>
-<div class="option"><input type="radio" name="q3" value="c"> At the store</div>
+<p><strong>3.</strong> According to the speaker, what does the word "income" mean?</p>
+<div class="option"><input type="radio" name="q3" value="a"> Money that you spend</div>
+<div class="option"><input type="radio" name="q3" value="b"> Money that you receive</div>
+<div class="option"><input type="radio" name="q3" value="c"> Money that you save</div>
 <div class="feedback" id="fb3"></div>
 </div>
 
 <div class="question">
-<p><strong>4.</strong> What is the purpose of the message?</p>
-<div class="option"><input type="radio" name="q4" value="a"> To inform</div>
-<div class="option"><input type="radio" name="q4" value="b"> To invite</div>
-<div class="option"><input type="radio" name="q4" value="c"> To apologize</div>
+<p><strong>4.</strong> Which of these is described as a NEED in the audio?</p>
+<div class="option"><input type="radio" name="q4" value="a"> A game</div>
+<div class="option"><input type="radio" name="q4" value="b"> Candy</div>
+<div class="option"><input type="radio" name="q4" value="c"> A bus card</div>
 <div class="feedback" id="fb4"></div>
 </div>
 
 <div class="question">
-<p><strong>5.</strong> Which statement is true?</p>
-<div class="option"><input type="radio" name="q5" value="a"> The speaker is excited</div>
-<div class="option"><input type="radio" name="q5" value="b"> The speaker is angry</div>
-<div class="option"><input type="radio" name="q5" value="c"> The speaker is confused</div>
+<p><strong>5.</strong> Which of these is described as a WANT in the audio?</p>
+<div class="option"><input type="radio" name="q5" value="a"> Food</div>
+<div class="option"><input type="radio" name="q5" value="b"> Candy</div>
+<div class="option"><input type="radio" name="q5" value="c"> Transportation</div>
 <div class="feedback" id="fb5"></div>
+</div>
+
+<div class="question">
+<p><strong>6.</strong> How much does Anna spend on transportation (the bus) in her budget?</p>
+<div class="option"><input type="radio" name="q6" value="a"> $10</div>
+<div class="option"><input type="radio" name="q6" value="b"> $15</div>
+<div class="option"><input type="radio" name="q6" value="c"> $20</div>
+<div class="feedback" id="fb6"></div>
+</div>
+
+<div class="question">
+<p><strong>7.</strong> How much money will Anna have after saving for two months?</p>
+<div class="option"><input type="radio" name="q7" value="a"> $40</div>
+<div class="option"><input type="radio" name="q7" value="b"> $50</div>
+<div class="option"><input type="radio" name="q7" value="c"> $80</div>
+<div class="feedback" id="fb7"></div>
+</div>
+
+<div class="question">
+<p><strong>8.</strong> What is the main lesson the speaker wants to teach?</p>
+<div class="option"><input type="radio" name="q8" value="a"> Buying candy is bad</div>
+<div class="option"><input type="radio" name="q8" value="b"> Planning and saving money is smart</div>
+<div class="option"><input type="radio" name="q8" value="c"> Anna needs to find a job</div>
+<div class="feedback" id="fb8"></div>
 </div>
 
 <div class="submit">
@@ -195,23 +219,35 @@ playBtn.onclick = function(){
 const answers = {
     q1: {
         correct: "b",
-        explanation: "The speaker shares a personal story instead of talking about a general topic. Listen for the use of 'I' and past-tense verbs describing their own experience."
+        explanation: "The speaker says: 'Today we talk about budget. A budget helps us use money well. A budget is a plan for money.' The whole audio teaches how to make and use a budget."
     },
     q2: {
-        correct: "a",
-        explanation: "The speaker mentions classes, homework and classmates - these are clues that point to a student, not a teacher or a visitor."
+        correct: "c",
+        explanation: "The speaker says: 'Anna gets $50 this week. This is her money. $50 is Anna's income.' So Anna's weekly income is $50."
     },
     q3: {
         correct: "b",
-        explanation: "References to lessons, the bell, and other students place the conversation in a school setting."
+        explanation: "The speaker clearly defines: 'Income means the money you receive.' It is the money that comes IN to you, not the money you spend or save."
     },
     q4: {
-        correct: "a",
-        explanation: "The speaker is providing facts and details, not asking the listener to attend an event (invite) or saying sorry (apologize). The purpose is to inform."
+        correct: "c",
+        explanation: "The speaker lists Anna's needs: 'Anna needs food. Anna needs a bus card.' A need is described as 'something important - you must have it.' Candy and a game are listed as wants."
     },
     q5: {
-        correct: "a",
-        explanation: "The speaker's tone, intonation and word choice ('great', 'amazing', 'I loved it') show enthusiasm - the speaker is excited."
+        correct: "b",
+        explanation: "The speaker says: 'Anna wants candy. Anna wants a game.' A want is described as 'something extra - it is nice, but not necessary.' Food and transportation are needs, not wants."
+    },
+    q6: {
+        correct: "b",
+        explanation: "In Anna's budget plan the speaker says: 'Food $20. Bus $15. Save $10. Candy $5.' So $15 is spent on the bus (transportation)."
+    },
+    q7: {
+        correct: "c",
+        explanation: "The speaker says: 'Anna saves $10 every week. After one month, she has $40. After two months, she has $80.' So after two months Anna will have $80."
+    },
+    q8: {
+        correct: "b",
+        explanation: "Throughout the audio the speaker emphasizes planning and saving: 'A budget helps us use money well', 'Small money grows big', and 'Saving money is very smart.' The main lesson is that planning and saving money is a smart habit."
     }
 };
 

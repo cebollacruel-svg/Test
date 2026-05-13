@@ -1,6 +1,10 @@
 /* =========================================================
-   MEP LISTENING PRACTICE - QUIZ LOGIC
+   MEP LISTENING PRACTICE - QUIZ LOGIC + GOOGLE SHEETS
    ========================================================= */
+
+// URL de Apps Script (ya configurada)
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2qTBUwWN5_zsBrGhslaw4asYc0EiY-TohO-DfRrU7aBFg42Zu0xmOkpT0yfmV5O6l/exec";
+
 
 /* ---------------------------------------------------------
    1. AUDIO CONTROLLER (reusable class)
@@ -47,49 +51,22 @@ const audio2Controller = new AudioController("audio2", "playBtn2", "counter2");
    2. ANSWER KEY & EXPLANATIONS
 --------------------------------------------------------- */
 const answers = {
-    // ---- Part 1: Managing Money ----
-    q1: {
-        correct: "b",
-        explanation: "The speaker says: 'I'm afraid I'm not going to tell you how to get rich quick, but I will tell you some simple things you can do that will help you save more money.' The talk is about simple money-saving advice, not getting rich quickly."
-    },
-    q2: {
-        correct: "c",
-        explanation: "The speaker clearly says: 'So I'm going to give you five tips. Simple but important advice to make sure you manage your money successfully.'"
-    },
-    q3: {
-        correct: "a",
-        explanation: "The speaker says: 'Now the first point, and perhaps the most important one, is about how much you spend. It's really important that you don't overspend.' The example given is: if you earn $2,000, don't spend $2,500."
-    },
-    q4: {
-        correct: "b",
-        explanation: "The speaker gives this exact example: 'Maybe just buy one cup of coffee a day instead of two. These small changes can make a difference.'"
-    },
-    q5: {
-        correct: "b",
-        explanation: "The speaker says: 'It's important that your salary is appropriate for your job.' He wants you to make sure you're not being paid too little for the work you do."
-    },
-    q6: {
-        correct: "b",
-        explanation: "The speaker advises: 'Find out how your salary compares to other people doing the same kind of job in two or three other companies.'"
-    },
-    q7: {
-        correct: "c",
-        explanation: "The speaker is very clear: 'Everyone needs a budget. It doesn't matter how much money you earn.' Even people with high incomes need a plan."
-    },
-    q8: {
-        correct: "b",
-        explanation: "The speaker stresses: 'Make sure you have a budget AND make sure you use it. Don't just write it and forget about it.' Creating a budget is useless if you don't actually follow it day to day."
-    },
-
-    // ---- Part 2: Movies ----
-    q9:  { correct: "a", explanation: "Sue mentions she enjoys science fiction and action films. Listen for her listing those two genres together." },
-    q10: { correct: "b", explanation: "Sue says she doesn't like horror movies - they scare her or she finds them unpleasant." },
-    q11: { correct: "b", explanation: "Bob says horror is his favorite. Listen for words like 'best', 'favorite', or 'love' connected to horror." },
-    q12: { correct: "b", explanation: "Bob clearly says he does NOT like westerns. Listen for a negative statement about westerns." },
-    q13: { correct: "a", explanation: "Andrew says action movies are his favorite type. Listen for him naming action as the top choice." },
-    q14: { correct: "a", explanation: "Andrew also says he likes comedies - he mentions enjoying them in addition to action films." },
-    q15: { correct: "b", explanation: "Tina says she loves westerns. Listen for her enthusiastic statement about that genre." },
-    q16: { correct: "b", explanation: "Tina clearly states she does NOT like horror movies. Listen for her negative reaction to that genre." }
+    q1: { correct: "b", explanation: "The speaker says: 'I'm afraid I'm not going to tell you how to get rich quick, but I will tell you some simple things you can do that will help you save more money.'" },
+    q2: { correct: "c", explanation: "The speaker clearly says: 'So I'm going to give you five tips. Simple but important advice to make sure you manage your money successfully.'" },
+    q3: { correct: "a", explanation: "The speaker says: 'Now the first point, and perhaps the most important one, is about how much you spend. It's really important that you don't overspend.'" },
+    q4: { correct: "b", explanation: "The speaker gives this exact example: 'Maybe just buy one cup of coffee a day instead of two. These small changes can make a difference.'" },
+    q5: { correct: "b", explanation: "The speaker says: 'It's important that your salary is appropriate for your job.' Make sure you're not being paid too little." },
+    q6: { correct: "b", explanation: "The speaker advises: 'Find out how your salary compares to other people doing the same kind of job in two or three other companies.'" },
+    q7: { correct: "c", explanation: "The speaker is very clear: 'Everyone needs a budget. It doesn't matter how much money you earn.'" },
+    q8: { correct: "b", explanation: "The speaker stresses: 'Make sure you have a budget AND make sure you use it. Don't just write it and forget about it.'" },
+    q9:  { correct: "a", explanation: "Sue mentions she enjoys science fiction and action films." },
+    q10: { correct: "b", explanation: "Sue says she doesn't like horror movies." },
+    q11: { correct: "b", explanation: "Bob says horror is his favorite." },
+    q12: { correct: "b", explanation: "Bob clearly says he does NOT like westerns." },
+    q13: { correct: "a", explanation: "Andrew says action movies are his favorite type." },
+    q14: { correct: "a", explanation: "Andrew also says he likes comedies." },
+    q15: { correct: "b", explanation: "Tina says she loves westerns." },
+    q16: { correct: "b", explanation: "Tina clearly states she does NOT like horror movies." }
 };
 
 
@@ -98,6 +75,17 @@ const answers = {
 --------------------------------------------------------- */
 function checkAnswers(event){
     event.preventDefault();
+
+    // Validar que escribieron el nombre
+    const nombre = document.getElementById("studentName").value.trim();
+
+    if(!nombre){
+        alert("Por favor escribe tu nombre antes de enviar las respuestas.");
+        document.getElementById("studentName").focus();
+        return;
+    }
+
+    // Evaluar respuestas
     let score = 0;
     const total = Object.keys(answers).length;
 
@@ -121,13 +109,21 @@ function checkAnswers(event){
         }
     }
 
-    displayResult(score, total);
+    // Mostrar puntaje
+    const percent = Math.round((score / total) * 100);
+    displayResult(score, total, percent);
+
+    // Guardar los datos en Google Sheets (solo nombre y puntaje)
+    guardarEnGoogleSheets({
+        nombre: nombre,
+        puntaje: score + "/" + total + " (" + percent + "%)"
+    });
+
     document.getElementById("fb1").scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-function displayResult(score, total){
+function displayResult(score, total, percent){
     const resultEl = document.getElementById("result");
-    const percent = Math.round((score / total) * 100);
     const passed = percent >= 60;
     resultEl.innerHTML = "Final Score: " + score + " / " + total + " (" + percent + "%)";
     resultEl.style.background = passed ? "var(--success-bg)" : "var(--error-bg)";
@@ -136,27 +132,67 @@ function displayResult(score, total){
 
 
 /* ---------------------------------------------------------
-   4. RESET FUNCTIONALITY
+   4. ENVIAR DATOS A GOOGLE SHEETS
+--------------------------------------------------------- */
+function guardarEnGoogleSheets(datos){
+    const statusEl = document.getElementById("saveStatus");
+
+    if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PEGA_AQUI")){
+        statusEl.className = "save-status error";
+        statusEl.textContent = "⚠ La URL de Google Sheets no está configurada en script.js";
+        return;
+    }
+
+    statusEl.className = "save-status saving";
+    statusEl.textContent = "💾 Guardando resultados...";
+
+    fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.success){
+            statusEl.className = "save-status saved";
+            statusEl.textContent = "✓ Resultados guardados correctamente. ¡Buen trabajo, " + datos.nombre + "!";
+        } else {
+            throw new Error(result.error || "Error desconocido");
+        }
+    })
+    .catch(err => {
+        console.error("Error guardando:", err);
+        statusEl.className = "save-status error";
+        statusEl.textContent = "⚠ No se pudieron guardar los resultados. Revisa tu conexión.";
+    });
+}
+
+
+/* ---------------------------------------------------------
+   5. RESET
 --------------------------------------------------------- */
 function resetQuiz(){
-    if(!confirm("Are you sure you want to reset the test? All answers and play counts will be erased.")) return;
+    if(!confirm("¿Seguro que quieres reiniciar el test? Se borrarán todas las respuestas.")) return;
     audio1Controller.reset();
     audio2Controller.reset();
     document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    document.getElementById("studentName").value = "";
+    const seccionEl = document.getElementById("studentSection");
+    if(seccionEl) seccionEl.value = "";
     document.querySelectorAll('.feedback').forEach(fb => {
         fb.style.display = "none";
         fb.className = "feedback";
         fb.innerHTML = "";
     });
-    const resultEl = document.getElementById("result");
-    resultEl.innerHTML = "";
-    resultEl.style.background = "";
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("result").style.background = "";
+    document.getElementById("saveStatus").style.display = "none";
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 
 /* ---------------------------------------------------------
-   5. EVENT LISTENERS
+   6. EVENT LISTENERS
 --------------------------------------------------------- */
 document.getElementById("quizForm").addEventListener("submit", checkAnswers);
 document.getElementById("resetBtn").addEventListener("click", resetQuiz);

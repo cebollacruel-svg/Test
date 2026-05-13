@@ -1,0 +1,282 @@
+/* =========================================================
+   GLOBAL RESET & VARIABLES
+   ========================================================= */
+:root{
+    --primary: #003399;
+    --primary-dark: #002277;
+    --primary-light: #d9e8ff;
+    --success: #16a34a;
+    --success-dark: #15803d;
+    --success-bg: #ecfdf5;
+    --error: #dc2626;
+    --error-bg: #fef2f2;
+    --gray-100: #f5f7fb;
+    --gray-200: #e5e7eb;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+*{ box-sizing: border-box; }
+
+body{
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    font-size: 15px;
+    background: var(--gray-100);
+    color: var(--gray-900);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   HEADER & FOOTER
+   ========================================================= */
+.site-header{
+    background: var(--primary);
+    color: #fff;
+    padding: 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+}
+
+.site-subheader{
+    background: var(--primary-light);
+    border-bottom: 1px solid var(--primary);
+    padding: 10px 15px;
+    text-align: center;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.site-footer{
+    text-align: center;
+    padding: 24px;
+    color: var(--gray-500);
+    font-size: 13px;
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+.wrapper{
+    max-width: 880px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.intro{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+}
+
+.intro p{ margin: 0; }
+
+.part-title{
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 30px 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary);
+}
+
+/* =========================================================
+   AUDIO PLAYER CARD
+   ========================================================= */
+.audio-card{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.audio-card h3{
+    margin: 0 0 12px 0;
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.audio-controls{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.play-btn{
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.play-btn:hover:not(:disabled){
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.play-btn:disabled{
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.counter{
+    color: var(--error);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+.question{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.question:hover{
+    box-shadow: var(--shadow-md);
+}
+
+.question h2{
+    font-size: 16px;
+    margin: 0 0 14px 0;
+    color: var(--gray-900);
+}
+
+.option{
+    display: block;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.option:hover{
+    background: #f3f4f6;
+    border-color: var(--primary);
+}
+
+.option input{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
+.feedback{
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.feedback.correct{
+    background: var(--success-bg);
+    border-left: 4px solid var(--success);
+    color: #14532d;
+}
+
+.feedback.incorrect{
+    background: var(--error-bg);
+    border-left: 4px solid var(--error);
+    color: #7f1d1d;
+}
+
+.feedback strong{
+    display: block;
+    margin-bottom: 4px;
+}
+
+@keyframes fadeIn{
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   BUTTONS & RESULT
+   ========================================================= */
+.submit-wrap{
+    text-align: center;
+    margin: 28px 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.submit-btn{
+    background: var(--success);
+    color: #fff;
+    border: none;
+    padding: 12px 32px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.submit-btn:hover{ background: var(--success-dark); }
+
+.reset-btn{
+    background: var(--gray-500);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.reset-btn:hover{ background: var(--gray-700); }
+
+.result{
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 600px){
+    .wrapper{ padding: 0 10px; }
+    .site-header{ font-size: 17px; }
+    .part-title{ font-size: 18px; }
+    .question h2{ font-size: 15px; }
+    .submit-btn, .reset-btn{ width: 100%; }
+}

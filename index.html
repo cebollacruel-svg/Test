@@ -1,294 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>MEP Listening Practice - Budgeting</title>
-<style>
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size:14px;
-    background:#ffffff;
-    color:#000;
-    margin:0;
-    padding:0;
-}
-.header{
-    background:#003399;
-    color:#fff;
-    padding:10px;
-    text-align:center;
-    font-weight:bold;
-    font-size:20px;
-}
-.subheader{
-    background:#d9e8ff;
-    border-bottom:1px solid #003399;
-    padding:8px 15px;
-}
-.wrapper{
-    width:900px;
-    margin:20px auto;
-}
-.section{
-    border:1px solid #999;
-    padding:15px;
-    margin-bottom:20px;
-}
-.audio-box{
-    background:#f7f7f7;
-    border:1px solid #ccc;
-    padding:15px;
-    text-align:center;
-}
-button{
-    background:#003399;
-    color:#fff;
-    border:none;
-    padding:8px 16px;
-    cursor:pointer;
-    font-size:14px;
-}
-button:disabled{
-    background:#777;
-}
-.counter{
-    margin-top:8px;
-    color:red;
-    font-weight:bold;
-}
-.question{
-    margin:20px 0;
-    border-top:1px solid #ccc;
-    padding-top:15px;
-}
-.option{
-    margin:6px 0;
-}
-.submit{
-    text-align:center;
-    margin-top:25px;
-}
-.result{
-    margin-top:20px;
-    text-align:center;
-    font-weight:bold;
-    font-size:18px;
-}
-.feedback{
-    margin-top:10px;
-    padding:10px 12px;
-    border-radius:4px;
-    font-size:14px;
-    display:none;
-}
-.feedback.correct{
-    background:#e6f4ea;
-    border-left:4px solid #2e7d32;
-    color:#1b5e20;
-}
-.feedback.incorrect{
-    background:#fdecea;
-    border-left:4px solid #c62828;
-    color:#8e0000;
-}
-.feedback strong{ display:block; margin-bottom:4px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEP Listening Practice</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="header">MINISTERIO DE EDUCACIÓN PÚBLICA</div>
-<div class="subheader">
+<header class="site-header">MINISTERIO DE EDUCACIÓN PÚBLICA</header>
+<div class="site-subheader">English Listening Practice Test - B1 Level</div>
 
-<div class="wrapper">
+<main class="wrapper">
 
-<div class="section">
-<p><strong>Instructions:</strong> Listen to the recording about Anna and her budget. You can play it only four times. Then choose the correct answer for each question.</p>
+    <section class="intro">
+        <p><strong>Instructions:</strong> This test has two parts. For each part, listen to the audio carefully. You can play each audio <strong>up to 4 times only</strong>. Then choose the best answer for each question.</p>
+    </section>
 
-<div class="audio-box">
-<audio id="audio">
-<source src="budgeting_A1_lesson.mp3" type="audio/mpeg">
-</audio>
+    <form id="quizForm">
 
-<button id="playBtn">Play Audio</button>
-<div class="counter" id="counter">Remaining plays: 4</div>
-</div>
-</div>
+        <!-- ============ PART 1: BUDGETING ============ -->
+        <h2 class="part-title">Part 1 - A Lesson About Budgeting</h2>
 
-<form id="quizForm">
+        <section class="audio-card">
+            <h3>Audio 1: Budgeting</h3>
+            <audio id="audio1">
+                <source src="budgeting_A1_lesson.mp3" type="audio/mpeg">
+            </audio>
+            <div class="audio-controls">
+                <button type="button" class="play-btn" id="playBtn1">Play Audio</button>
+                <span class="counter" id="counter1">Remaining plays: 4</span>
+            </div>
+        </section>
 
-<div class="section">
+        <article class="question">
+            <h2>1. According to the audio, what is a budget?</h2>
+            <label class="option"><input type="radio" name="q1" value="a"> A. A game</label>
+            <label class="option"><input type="radio" name="q1" value="b"> B. A plan for money</label>
+            <label class="option"><input type="radio" name="q1" value="c"> C. A bank</label>
+            <div class="feedback" id="fb1"></div>
+        </article>
 
-<div class="question">
-<p><strong>1.</strong> What is the main topic of the audio?</p>
-<div class="option"><input type="radio" name="q1" value="a"> How to earn more money</div>
-<div class="option"><input type="radio" name="q1" value="b"> How to make and use a budget</div>
-<div class="option"><input type="radio" name="q1" value="c"> How to open a bank account</div>
-<div class="feedback" id="fb1"></div>
-</div>
+        <article class="question">
+            <h2>2. How much money does Anna get this week?</h2>
+            <label class="option"><input type="radio" name="q2" value="a"> A. $40</label>
+            <label class="option"><input type="radio" name="q2" value="b"> B. $50</label>
+            <label class="option"><input type="radio" name="q2" value="c"> C. $60</label>
+            <div class="feedback" id="fb2"></div>
+        </article>
 
-<div class="question">
-<p><strong>2.</strong> How much money does Anna receive each week?</p>
-<div class="option"><input type="radio" name="q2" value="a"> $15</div>
-<div class="option"><input type="radio" name="q2" value="b"> $40</div>
-<div class="option"><input type="radio" name="q2" value="c"> $50</div>
-<div class="feedback" id="fb2"></div>
-</div>
+        <article class="question">
+            <h2>3. According to the speaker, what is a "need"?</h2>
+            <label class="option"><input type="radio" name="q3" value="a"> A. Something important you must have</label>
+            <label class="option"><input type="radio" name="q3" value="b"> B. Something extra and nice</label>
+            <label class="option"><input type="radio" name="q3" value="c"> C. Something funny</label>
+            <div class="feedback" id="fb3"></div>
+        </article>
 
-<div class="question">
-<p><strong>3.</strong> According to the speaker, what does the word "income" mean?</p>
-<div class="option"><input type="radio" name="q3" value="a"> Money that you spend</div>
-<div class="option"><input type="radio" name="q3" value="b"> Money that you receive</div>
-<div class="option"><input type="radio" name="q3" value="c"> Money that you save</div>
-<div class="feedback" id="fb3"></div>
-</div>
+        <article class="question">
+            <h2>4. How much money does Anna save each week?</h2>
+            <label class="option"><input type="radio" name="q4" value="a"> A. $5</label>
+            <label class="option"><input type="radio" name="q4" value="b"> B. $10</label>
+            <label class="option"><input type="radio" name="q4" value="c"> C. $15</label>
+            <div class="feedback" id="fb4"></div>
+        </article>
 
-<div class="question">
-<p><strong>4.</strong> Which of these is described as a NEED in the audio?</p>
-<div class="option"><input type="radio" name="q4" value="a"> A game</div>
-<div class="option"><input type="radio" name="q4" value="b"> Candy</div>
-<div class="option"><input type="radio" name="q4" value="c"> A bus card</div>
-<div class="feedback" id="fb4"></div>
-</div>
+        <!-- ============ PART 2: MOVIES ============ -->
+        <h2 class="part-title">Part 2 - Movie Preferences</h2>
 
-<div class="question">
-<p><strong>5.</strong> Which of these is described as a WANT in the audio?</p>
-<div class="option"><input type="radio" name="q5" value="a"> Food</div>
-<div class="option"><input type="radio" name="q5" value="b"> Candy</div>
-<div class="option"><input type="radio" name="q5" value="c"> Transportation</div>
-<div class="feedback" id="fb5"></div>
-</div>
+        <section class="audio-card">
+            <h3>Audio 2: People talking about movies</h3>
+            <audio id="audio2">
+                <source src="SVID_20260511_194110_1.mp3" type="audio/mpeg">
+            </audio>
+            <div class="audio-controls">
+                <button type="button" class="play-btn" id="playBtn2">Play Audio</button>
+                <span class="counter" id="counter2">Remaining plays: 4</span>
+            </div>
+        </section>
 
-<div class="question">
-<p><strong>6.</strong> How much does Anna spend on transportation (the bus) in her budget?</p>
-<div class="option"><input type="radio" name="q6" value="a"> $10</div>
-<div class="option"><input type="radio" name="q6" value="b"> $15</div>
-<div class="option"><input type="radio" name="q6" value="c"> $20</div>
-<div class="feedback" id="fb6"></div>
-</div>
+        <article class="question">
+            <h2>5. What kind of movies does Sue like?</h2>
+            <label class="option"><input type="radio" name="q5" value="a"> A. Science fiction and action</label>
+            <label class="option"><input type="radio" name="q5" value="b"> B. Horror only</label>
+            <label class="option"><input type="radio" name="q5" value="c"> C. Westerns</label>
+            <div class="feedback" id="fb5"></div>
+        </article>
 
-<div class="question">
-<p><strong>7.</strong> How much money will Anna have after saving for two months?</p>
-<div class="option"><input type="radio" name="q7" value="a"> $40</div>
-<div class="option"><input type="radio" name="q7" value="b"> $50</div>
-<div class="option"><input type="radio" name="q7" value="c"> $80</div>
-<div class="feedback" id="fb7"></div>
-</div>
+        <article class="question">
+            <h2>6. What kind of movies does Sue dislike?</h2>
+            <label class="option"><input type="radio" name="q6" value="a"> A. Comedies</label>
+            <label class="option"><input type="radio" name="q6" value="b"> B. Horror</label>
+            <label class="option"><input type="radio" name="q6" value="c"> C. Action</label>
+            <div class="feedback" id="fb6"></div>
+        </article>
 
-<div class="question">
-<p><strong>8.</strong> What is the main lesson the speaker wants to teach?</p>
-<div class="option"><input type="radio" name="q8" value="a"> Buying candy is bad</div>
-<div class="option"><input type="radio" name="q8" value="b"> Planning and saving money is smart</div>
-<div class="option"><input type="radio" name="q8" value="c"> Anna needs to find a job</div>
-<div class="feedback" id="fb8"></div>
-</div>
+        <article class="question">
+            <h2>7. What kind of movies does Bob like best?</h2>
+            <label class="option"><input type="radio" name="q7" value="a"> A. Westerns</label>
+            <label class="option"><input type="radio" name="q7" value="b"> B. Horror</label>
+            <label class="option"><input type="radio" name="q7" value="c"> C. Comedy</label>
+            <div class="feedback" id="fb7"></div>
+        </article>
 
-<div class="submit">
-<button type="submit">Check Answers</button>
-</div>
+        <article class="question">
+            <h2>8. Does Bob like westerns?</h2>
+            <label class="option"><input type="radio" name="q8" value="a"> A. Yes</label>
+            <label class="option"><input type="radio" name="q8" value="b"> B. No</label>
+            <label class="option"><input type="radio" name="q8" value="c"> C. Sometimes</label>
+            <div class="feedback" id="fb8"></div>
+        </article>
 
-<div class="result" id="result"></div>
+        <article class="question">
+            <h2>9. What is Andrew's favorite type of movie?</h2>
+            <label class="option"><input type="radio" name="q9" value="a"> A. Action</label>
+            <label class="option"><input type="radio" name="q9" value="b"> B. Comedy</label>
+            <label class="option"><input type="radio" name="q9" value="c"> C. Drama</label>
+            <div class="feedback" id="fb9"></div>
+        </article>
 
-</div>
-</form>
-</div>
+        <article class="question">
+            <h2>10. Does Andrew like comedies?</h2>
+            <label class="option"><input type="radio" name="q10" value="a"> A. Yes</label>
+            <label class="option"><input type="radio" name="q10" value="b"> B. No</label>
+            <label class="option"><input type="radio" name="q10" value="c"> C. Not sure</label>
+            <div class="feedback" id="fb10"></div>
+        </article>
 
-<script>
-let audio = document.getElementById("audio");
-let playBtn = document.getElementById("playBtn");
-let counter = document.getElementById("counter");
+        <article class="question">
+            <h2>11. What kind of movies does Tina love?</h2>
+            <label class="option"><input type="radio" name="q11" value="a"> A. Horror</label>
+            <label class="option"><input type="radio" name="q11" value="b"> B. Westerns</label>
+            <label class="option"><input type="radio" name="q11" value="c"> C. Science fiction</label>
+            <div class="feedback" id="fb11"></div>
+        </article>
 
-let plays = 0;
-const maxPlays = 4;
+        <article class="question">
+            <h2>12. Does Tina like horror movies?</h2>
+            <label class="option"><input type="radio" name="q12" value="a"> A. Yes</label>
+            <label class="option"><input type="radio" name="q12" value="b"> B. No</label>
+            <label class="option"><input type="radio" name="q12" value="c"> C. Only sometimes</label>
+            <div class="feedback" id="fb12"></div>
+        </article>
 
-playBtn.onclick = function(){
-    if(plays < maxPlays){
-        audio.currentTime = 0;
-        audio.play();
-        plays++;
-        counter.textContent = "Remaining plays: " + (maxPlays - plays);
+        <div class="submit-wrap">
+            <button type="submit" class="submit-btn">Check Answers</button>
+            <button type="button" class="reset-btn" id="resetBtn">Reset Test</button>
+        </div>
 
-        if(plays === maxPlays){
-            playBtn.disabled = true;
-            playBtn.textContent = "No More Plays";
-        }
-    }
-}
+        <div class="result" id="result"></div>
 
-const answers = {
-    q1: {
-        correct: "b",
-        explanation: "The speaker says: 'Today we talk about budget. A budget helps us use money well. A budget is a plan for money.' The whole audio teaches how to make and use a budget."
-    },
-    q2: {
-        correct: "c",
-        explanation: "The speaker says: 'Anna gets $50 this week. This is her money. $50 is Anna's income.' So Anna's weekly income is $50."
-    },
-    q3: {
-        correct: "b",
-        explanation: "The speaker clearly defines: 'Income means the money you receive.' It is the money that comes IN to you, not the money you spend or save."
-    },
-    q4: {
-        correct: "c",
-        explanation: "The speaker lists Anna's needs: 'Anna needs food. Anna needs a bus card.' A need is described as 'something important - you must have it.' Candy and a game are listed as wants."
-    },
-    q5: {
-        correct: "b",
-        explanation: "The speaker says: 'Anna wants candy. Anna wants a game.' A want is described as 'something extra - it is nice, but not necessary.' Food and transportation are needs, not wants."
-    },
-    q6: {
-        correct: "b",
-        explanation: "In Anna's budget plan the speaker says: 'Food $20. Bus $15. Save $10. Candy $5.' So $15 is spent on the bus (transportation)."
-    },
-    q7: {
-        correct: "c",
-        explanation: "The speaker says: 'Anna saves $10 every week. After one month, she has $40. After two months, she has $80.' So after two months Anna will have $80."
-    },
-    q8: {
-        correct: "b",
-        explanation: "Throughout the audio the speaker emphasizes planning and saving: 'A budget helps us use money well', 'Small money grows big', and 'Saving money is very smart.' The main lesson is that planning and saving money is a smart habit."
-    }
-};
+    </form>
 
-document.getElementById("quizForm").addEventListener("submit", function(e){
-    e.preventDefault();
+</main>
 
-    let score = 0;
-    let total = Object.keys(answers).length;
+<footer class="site-footer">
+    <p>&copy; 2026 MEP Listening Practice · Created for English learners</p>
+</footer>
 
-    for(let key in answers){
-        let selected = document.querySelector('input[name="' + key + '"]:checked');
-        let fb = document.getElementById("fb" + key.substring(1));
-        let correctLetter = answers[key].correct.toUpperCase();
-        let explanation = answers[key].explanation;
-
-        fb.style.display = "block";
-
-        if(!selected){
-            fb.className = "feedback incorrect";
-            fb.innerHTML =
-                "<strong>No answer selected</strong>" +
-                "Correct answer: <b>" + correctLetter + "</b>. " + explanation;
-        } else if(selected.value === answers[key].correct){
-            score++;
-            fb.className = "feedback correct";
-            fb.innerHTML =
-                "<strong>Correct!</strong>" + explanation;
-        } else {
-            fb.className = "feedback incorrect";
-            fb.innerHTML =
-                "<strong>Incorrect.</strong>" +
-                "The correct answer is <b>" + correctLetter + "</b>. " + explanation;
-        }
-    }
-
-    let resultEl = document.getElementById("result");
-    let percent = Math.round((score / total) * 100);
-    resultEl.innerHTML = "Final Score: " + score + " / " + total + " (" + percent + "%)";
-    resultEl.style.color = (percent >= 60) ? "#2e7d32" : "#c62828";
-
-    document.getElementById("fb1").scrollIntoView({behavior:"smooth", block:"center"});
-});
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

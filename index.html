@@ -74,6 +74,24 @@ button:disabled{
     font-weight:bold;
     font-size:18px;
 }
+.feedback{
+    margin-top:10px;
+    padding:10px 12px;
+    border-radius:4px;
+    font-size:14px;
+    display:none;
+}
+.feedback.correct{
+    background:#e6f4ea;
+    border-left:4px solid #2e7d32;
+    color:#1b5e20;
+}
+.feedback.incorrect{
+    background:#fdecea;
+    border-left:4px solid #c62828;
+    color:#8e0000;
+}
+.feedback strong{ display:block; margin-bottom:4px; }
 </style>
 </head>
 <body>
@@ -107,6 +125,7 @@ English Listening Practice Test
 <div class="option"><input type="radio" name="q1" value="a"> School activities</div>
 <div class="option"><input type="radio" name="q1" value="b"> Personal experience</div>
 <div class="option"><input type="radio" name="q1" value="c"> Transportation</div>
+<div class="feedback" id="fb1"></div>
 </div>
 
 <div class="question">
@@ -114,6 +133,7 @@ English Listening Practice Test
 <div class="option"><input type="radio" name="q2" value="a"> Student</div>
 <div class="option"><input type="radio" name="q2" value="b"> Teacher</div>
 <div class="option"><input type="radio" name="q2" value="c"> Visitor</div>
+<div class="feedback" id="fb2"></div>
 </div>
 
 <div class="question">
@@ -121,6 +141,7 @@ English Listening Practice Test
 <div class="option"><input type="radio" name="q3" value="a"> At home</div>
 <div class="option"><input type="radio" name="q3" value="b"> At school</div>
 <div class="option"><input type="radio" name="q3" value="c"> At the store</div>
+<div class="feedback" id="fb3"></div>
 </div>
 
 <div class="question">
@@ -128,6 +149,7 @@ English Listening Practice Test
 <div class="option"><input type="radio" name="q4" value="a"> To inform</div>
 <div class="option"><input type="radio" name="q4" value="b"> To invite</div>
 <div class="option"><input type="radio" name="q4" value="c"> To apologize</div>
+<div class="feedback" id="fb4"></div>
 </div>
 
 <div class="question">
@@ -135,6 +157,7 @@ English Listening Practice Test
 <div class="option"><input type="radio" name="q5" value="a"> The speaker is excited</div>
 <div class="option"><input type="radio" name="q5" value="b"> The speaker is angry</div>
 <div class="option"><input type="radio" name="q5" value="c"> The speaker is confused</div>
+<div class="feedback" id="fb5"></div>
 </div>
 
 <div class="submit">
@@ -170,26 +193,66 @@ playBtn.onclick = function(){
 }
 
 const answers = {
-q1:"b",
-q2:"a",
-q3:"b",
-q4:"a",
-q5:"a"
+    q1: {
+        correct: "b",
+        explanation: "The speaker shares a personal story instead of talking about a general topic. Listen for the use of 'I' and past-tense verbs describing their own experience."
+    },
+    q2: {
+        correct: "a",
+        explanation: "The speaker mentions classes, homework and classmates - these are clues that point to a student, not a teacher or a visitor."
+    },
+    q3: {
+        correct: "b",
+        explanation: "References to lessons, the bell, and other students place the conversation in a school setting."
+    },
+    q4: {
+        correct: "a",
+        explanation: "The speaker is providing facts and details, not asking the listener to attend an event (invite) or saying sorry (apologize). The purpose is to inform."
+    },
+    q5: {
+        correct: "a",
+        explanation: "The speaker's tone, intonation and word choice ('great', 'amazing', 'I loved it') show enthusiasm - the speaker is excited."
+    }
 };
 
 document.getElementById("quizForm").addEventListener("submit", function(e){
     e.preventDefault();
 
     let score = 0;
+    let total = Object.keys(answers).length;
 
     for(let key in answers){
-        let selected = document.querySelector(`input[name="${key}"]:checked`);
-        if(selected && selected.value === answers[key]){
+        let selected = document.querySelector('input[name="' + key + '"]:checked');
+        let fb = document.getElementById("fb" + key.substring(1));
+        let correctLetter = answers[key].correct.toUpperCase();
+        let explanation = answers[key].explanation;
+
+        fb.style.display = "block";
+
+        if(!selected){
+            fb.className = "feedback incorrect";
+            fb.innerHTML =
+                "<strong>No answer selected</strong>" +
+                "Correct answer: <b>" + correctLetter + "</b>. " + explanation;
+        } else if(selected.value === answers[key].correct){
             score++;
+            fb.className = "feedback correct";
+            fb.innerHTML =
+                "<strong>Correct!</strong>" + explanation;
+        } else {
+            fb.className = "feedback incorrect";
+            fb.innerHTML =
+                "<strong>Incorrect.</strong>" +
+                "The correct answer is <b>" + correctLetter + "</b>. " + explanation;
         }
     }
 
-    document.getElementById("result").innerHTML = "Final Score: " + score + " / 5";
+    let resultEl = document.getElementById("result");
+    let percent = Math.round((score / total) * 100);
+    resultEl.innerHTML = "Final Score: " + score + " / " + total + " (" + percent + "%)";
+    resultEl.style.color = (percent >= 60) ? "#2e7d32" : "#c62828";
+
+    document.getElementById("fb1").scrollIntoView({behavior:"smooth", block:"center"});
 });
 </script>
 

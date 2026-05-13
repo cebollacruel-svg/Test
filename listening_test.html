@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MEP Listening Practice</title>
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:14px;
+    background:#ffffff;
+    color:#000;
+    margin:0;
+    padding:0;
+}
+.header{
+    background:#003399;
+    color:#fff;
+    padding:10px;
+    text-align:center;
+    font-weight:bold;
+    font-size:20px;
+}
+.subheader{
+    background:#d9e8ff;
+    border-bottom:1px solid #003399;
+    padding:8px 15px;
+}
+.wrapper{
+    width:900px;
+    margin:20px auto;
+}
+.section{
+    border:1px solid #999;
+    padding:15px;
+    margin-bottom:20px;
+}
+.audio-box{
+    background:#f7f7f7;
+    border:1px solid #ccc;
+    padding:15px;
+    text-align:center;
+}
+button{
+    background:#003399;
+    color:#fff;
+    border:none;
+    padding:8px 16px;
+    cursor:pointer;
+    font-size:14px;
+}
+button:disabled{
+    background:#777;
+}
+.counter{
+    margin-top:8px;
+    color:red;
+    font-weight:bold;
+}
+.question{
+    margin:20px 0;
+    border-top:1px solid #ccc;
+    padding-top:15px;
+}
+.option{
+    margin:6px 0;
+}
+.submit{
+    text-align:center;
+    margin-top:25px;
+}
+.result{
+    margin-top:20px;
+    text-align:center;
+    font-weight:bold;
+    font-size:18px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">MINISTERIO DE EDUCACIÓN PÚBLICA</div>
+<div class="subheader">
+English Listening Practice Test
+</div>
+
+<div class="wrapper">
+
+<div class="section">
+<p><strong>Instructions:</strong> Listen to the recording. You can play it only four times. Then choose the correct answer.</p>
+
+<div class="audio-box">
+<audio id="audio">
+<source src="SVID_20260511_194110_1.mp3" type="audio/mpeg">
+</audio>
+
+<button id="playBtn">Play Audio</button>
+<div class="counter" id="counter">Remaining plays: 4</div>
+</div>
+</div>
+
+<form id="quizForm">
+
+<div class="section">
+
+<div class="question">
+<p><strong>1.</strong> What is the speaker mainly talking about?</p>
+<div class="option"><input type="radio" name="q1" value="a"> School activities</div>
+<div class="option"><input type="radio" name="q1" value="b"> Personal experience</div>
+<div class="option"><input type="radio" name="q1" value="c"> Transportation</div>
+</div>
+
+<div class="question">
+<p><strong>2.</strong> Who is probably speaking?</p>
+<div class="option"><input type="radio" name="q2" value="a"> Student</div>
+<div class="option"><input type="radio" name="q2" value="b"> Teacher</div>
+<div class="option"><input type="radio" name="q2" value="c"> Visitor</div>
+</div>
+
+<div class="question">
+<p><strong>3.</strong> Where does the conversation most likely happen?</p>
+<div class="option"><input type="radio" name="q3" value="a"> At home</div>
+<div class="option"><input type="radio" name="q3" value="b"> At school</div>
+<div class="option"><input type="radio" name="q3" value="c"> At the store</div>
+</div>
+
+<div class="question">
+<p><strong>4.</strong> What is the purpose of the message?</p>
+<div class="option"><input type="radio" name="q4" value="a"> To inform</div>
+<div class="option"><input type="radio" name="q4" value="b"> To invite</div>
+<div class="option"><input type="radio" name="q4" value="c"> To apologize</div>
+</div>
+
+<div class="question">
+<p><strong>5.</strong> Which statement is true?</p>
+<div class="option"><input type="radio" name="q5" value="a"> The speaker is excited</div>
+<div class="option"><input type="radio" name="q5" value="b"> The speaker is angry</div>
+<div class="option"><input type="radio" name="q5" value="c"> The speaker is confused</div>
+</div>
+
+<div class="submit">
+<button type="submit">Check Answers</button>
+</div>
+
+<div class="result" id="result"></div>
+
+</div>
+</form>
+</div>
+
+<script>
+let audio = document.getElementById("audio");
+let playBtn = document.getElementById("playBtn");
+let counter = document.getElementById("counter");
+
+let plays = 0;
+const maxPlays = 4;
+
+playBtn.onclick = function(){
+    if(plays < maxPlays){
+        audio.currentTime = 0;
+        audio.play();
+        plays++;
+        counter.textContent = "Remaining plays: " + (maxPlays - plays);
+
+        if(plays === maxPlays){
+            playBtn.disabled = true;
+            playBtn.textContent = "No More Plays";
+        }
+    }
+}
+
+const answers = {
+q1:"b",
+q2:"a",
+q3:"b",
+q4:"a",
+q5:"a"
+};
+
+document.getElementById("quizForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let score = 0;
+
+    for(let key in answers){
+        let selected = document.querySelector(`input[name="${key}"]:checked`);
+        if(selected && selected.value === answers[key]){
+            score++;
+        }
+    }
+
+    document.getElementById("result").innerHTML = "Final Score: " + score + " / 5";
+});
+</script>
+
+</body>
+</html>

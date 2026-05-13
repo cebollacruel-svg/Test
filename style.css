@@ -92,6 +92,37 @@ body{
 }
 
 /* =========================================================
+   CAMPO DEL ESTUDIANTE
+   ========================================================= */
+.student-info{
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--gray-200);
+}
+
+.student-info label{
+    display: block;
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.student-info input{
+    padding: 10px 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.student-info input:focus{
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* =========================================================
    AUDIO PLAYER CARD
    ========================================================= */
 .audio-card{
@@ -271,7 +302,38 @@ body{
 }
 
 /* =========================================================
-   RESPONSIVE
+   SAVE STATUS (mensaje de guardado en Google Sheets)
+   ========================================================= */
+.save-status{
+    text-align: center;
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    display: none;
+}
+
+.save-status.saving{
+    background: #fef3c7;
+    color: #92400e;
+    display: block;
+}
+
+.save-status.saved{
+    background: var(--success-bg);
+    color: var(--success-dark);
+    display: block;
+}
+
+.save-status.error{
+    background: var(--error-bg);
+    color: var(--error);
+    display: block;
+}
+
+/* =========================================================
+   RESPONSIVE (móviles)
    ========================================================= */
 @media (max-width: 600px){
     .wrapper{ padding: 0 10px; }

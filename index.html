@@ -15,6 +15,11 @@
 
     <section class="intro">
         <p><strong>Instructions:</strong> This test has two parts. For each part, listen to the audio carefully. You can play each audio <strong>up to 4 times only</strong>. Then choose the best answer for each question.</p>
+
+        <div class="student-info">
+            <label for="studentName">Full Name *</label>
+            <input type="text" id="studentName" placeholder="Enter your full name" required>
+        </div>
     </section>
 
     <form id="quizForm">
@@ -180,6 +185,7 @@
             <button type="button" class="reset-btn" id="resetBtn">Reset Test</button>
         </div>
 
+        <div id="saveStatus" class="save-status"></div>
         <div class="result" id="result"></div>
 
     </form>

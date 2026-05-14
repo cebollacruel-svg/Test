@@ -14,7 +14,7 @@
 <main class="wrapper">
 
     <section class="intro">
-        <p><strong>Instructions:</strong> This test has two parts. For each part, listen to the audio carefully. You can play each audio <strong>up to 4 times only</strong>. Then choose the best answer for each question.</p>
+        <p><strong>Instructions:</strong> This test has three parts. For each part, listen to the audio carefully. You can play each audio <strong>up to 4 times only</strong>. Then choose the best answer for each question.</p>
 
         <div class="student-info">
             <label for="studentName">Full Name *</label>
@@ -178,6 +178,138 @@
             <label class="option"><input type="radio" name="q16" value="b"> B. No</label>
             <label class="option"><input type="radio" name="q16" value="c"> C. Only sometimes</label>
             <div class="feedback" id="fb16"></div>
+        </article>
+
+        <!-- ============ PART 3: MATCHING - KLOZE-ZONE ============ -->
+        <h2 class="part-title">Part 3 - Kloze-Zone Store Feedback (Matching)</h2>
+
+        <section class="audio-card">
+            <h3>Audio 3: Six people talking about Kloze-Zone store</h3>
+            <audio id="audio3">
+                <source src="audio3.mp3" type="audio/mpeg">
+            </audio>
+            <div class="audio-controls">
+                <button type="button" class="play-btn" id="playBtn3">Play Audio</button>
+                <span class="counter" id="counter3">Remaining plays: 4</span>
+            </div>
+        </section>
+
+        <article class="question matching-question">
+            <h2>17 - 22. Match each speaker with the correct topic.</h2>
+            <p class="match-instructions">
+                Listen to the six speakers in <strong>Column A</strong>. Read the six topics in <strong>Column B</strong>.
+                For each speaker, choose the number of the topic they are talking about.
+            </p>
+
+            <div class="matching-grid">
+                <!-- COLUMN A: Speakers with dropdowns -->
+                <div class="column-a">
+                    <h3>Column A — Speakers</h3>
+
+                    <div class="match-row">
+                        <label>17. Speaker 1
+                            <select name="q17" class="match-select">
+                                <option value="">( ? )</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </label>
+                        <div class="feedback" id="fb17"></div>
+                    </div>
+
+                    <div class="match-row">
+                        <label>18. Speaker 2
+                            <select name="q18" class="match-select">
+                                <option value="">( ? )</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </label>
+                        <div class="feedback" id="fb18"></div>
+                    </div>
+
+                    <div class="match-row">
+                        <label>19. Speaker 3
+                            <select name="q19" class="match-select">
+                                <option value="">( ? )</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </label>
+                        <div class="feedback" id="fb19"></div>
+                    </div>
+
+                    <div class="match-row">
+                        <label>20. Speaker 4
+                            <select name="q20" class="match-select">
+                                <option value="">( ? )</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </label>
+                        <div class="feedback" id="fb20"></div>
+                    </div>
+
+                    <div class="match-row">
+                        <label>21. Speaker 5
+                            <select name="q21" class="match-select">
+                                <option value="">( ? )</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </label>
+                        <div class="feedback" id="fb21"></div>
+                    </div>
+
+                    <div class="match-row">
+                        <label>22. Speaker 6
+                            <select name="q22" class="match-select">
+                                <option value="">( ? )</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </label>
+                        <div class="feedback" id="fb22"></div>
+                    </div>
+                </div>
+
+                <!-- COLUMN B: Topics -->
+                <div class="column-b">
+                    <h3>Column B — Topics</h3>
+                    <ol class="topics-list">
+                        <li>The mobile app is excellent, but more staff are needed to help customers in the fitting rooms.</li>
+                        <li>Working hours are too long; some colleagues already left because of this.</li>
+                        <li>Window displays should be more creative and innovative to attract people walking by.</li>
+                        <li>Marketing campaigns should also target male customers, not only women.</li>
+                        <li>Staff turnover is very high; the company should improve its brand awareness.</li>
+                        <li>The store should organize more special events and promotions, especially in quiet months.</li>
+                    </ol>
+                </div>
+            </div>
         </article>
 
         <div class="submit-wrap">

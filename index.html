@@ -4,364 +4,250 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listening Exam - Colegio Nocturno de Cariari</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Animated background -->
-<div class="bg-decoration">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-</div>
-
-<header class="site-header">
-    <div class="header-content">
-        <div class="header-icon">🎧</div>
-        <div>
-            <h1>COLEGIO NOCTURNO DE CARIARI</h1>
-            <p class="header-sub">Listening Exam · First Semester 2026 · 11th Graders</p>
-        </div>
-    </div>
-</header>
-
-<!-- Progress bar -->
-<div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
-    <span class="progress-text" id="progressText">0 / 20 answered</span>
-</div>
+<header class="site-header">COLEGIO NOCTURNO DE CARIARI</header>
+<div class="site-subheader">Listening Exam – First Semester 2026 · 11th Graders</div>
 
 <main class="wrapper">
 
-    <section class="intro card-glow">
-        <div class="intro-grid">
-            <div class="intro-item">
-                <span class="intro-icon">👨‍🏫</span>
-                <div>
-                    <span class="intro-label">Teacher</span>
-                    <span class="intro-value">Saiden Ortiz Gómez</span>
-                </div>
-            </div>
-            <div class="intro-item">
-                <span class="intro-icon">🏆</span>
-                <div>
-                    <span class="intro-label">Total Points</span>
-                    <span class="intro-value">20 (10%)</span>
-                </div>
-            </div>
-            <div class="intro-item">
-                <span class="intro-icon">⏱️</span>
-                <div>
-                    <span class="intro-label">Allotted Time</span>
-                    <span class="intro-value">80 minutes</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="instructions-box">
-            <strong>📋 Instructions:</strong> This exam has two sections — Multiple Choice (15 points) and Matching (5 points). Each audio can be played <strong>up to 4 times only</strong>. Choose the correct answer for each question.
-        </div>
+    <section class="intro">
+        <p><strong>Teacher:</strong> Saiden Ortiz Gómez &nbsp;|&nbsp; <strong>Total Points:</strong> 20 (10%) &nbsp;|&nbsp; <strong>Allotted Time:</strong> 80 minutes</p>
+        <p><strong>Instructions:</strong> This exam has two sections — Multiple Choice (15 points) and Matching (5 points). Each audio can be played <strong>up to 4 times only</strong>. Choose the correct answer for each question.</p>
 
         <div class="student-info">
-            <label for="studentName">
-                <span class="label-icon">✏️</span> Student's Name *
-            </label>
+            <label for="studentName">Student's Name *</label>
             <input type="text" id="studentName" placeholder="Write your full name" required>
         </div>
     </section>
 
     <form id="quizForm">
 
-        <h2 class="section-title">
-            <span class="section-num">1</span>
-            Multiple Choice
-            <span class="section-points">15 points</span>
-        </h2>
+        <h2 class="section-title">Multiple Choice — 15 points</h2>
 
         <!-- ============ AUDIO 1 (Q1-3) ============ -->
         <section class="audio-card">
-            <p class="directions">📝 Instructions: You will hear a conversation between two or more people. Choose the correct answer for each question.</p>
+            <p class="directions">Instructions: You will hear a conversation between two or more people. Choose the correct answer for each question.</p>
             <audio id="audio1"><source src="audio1.mp3" type="audio/mpeg"></audio>
             <div class="audio-controls">
-                <button type="button" class="play-btn" id="playBtn1">
-                    <span class="play-icon">▶</span>
-                    <span class="play-text">Play Audio</span>
-                </button>
-                <div class="counter-wrap">
-                    <span class="counter-label">Remaining plays</span>
-                    <span class="counter-value" id="counter1">4</span>
-                    <div class="plays-dots" data-audio="1">
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                    </div>
-                </div>
+                <button type="button" class="play-btn" id="playBtn1">Play Audio</button>
+                <span class="counter" id="counter1">Remaining plays: 4</span>
             </div>
         </section>
 
-        <article class="question" data-q="1">
-            <h2><span class="q-num">1</span> Why doesn't the man want the burger?</h2>
-            <label class="option"><input type="radio" name="q1" value="a"><span class="opt-letter">A</span><span class="opt-text">He doesn't like burgers.</span></label>
-            <label class="option"><input type="radio" name="q1" value="b"><span class="opt-letter">B</span><span class="opt-text">He wants to eat healthy food.</span></label>
-            <label class="option"><input type="radio" name="q1" value="c"><span class="opt-letter">C</span><span class="opt-text">He is not hungry.</span></label>
-            <label class="option"><input type="radio" name="q1" value="d"><span class="opt-letter">D</span><span class="opt-text">He wants a bigger meal.</span></label>
+        <article class="question">
+            <h2>1. Why doesn't the man want the burger?</h2>
+            <label class="option"><input type="radio" name="q1" value="a"> A) He doesn't like burgers.</label>
+            <label class="option"><input type="radio" name="q1" value="b"> B) He wants to eat healthy food.</label>
+            <label class="option"><input type="radio" name="q1" value="c"> C) He is not hungry.</label>
+            <label class="option"><input type="radio" name="q1" value="d"> D) He wants a bigger meal.</label>
             <div class="feedback" id="fb1"></div>
         </article>
 
-        <article class="question" data-q="2">
-            <h2><span class="q-num">2</span> What did the doctor tell the man?</h2>
-            <label class="option"><input type="radio" name="q2" value="a"><span class="opt-letter">A</span><span class="opt-text">Eat more cake.</span></label>
-            <label class="option"><input type="radio" name="q2" value="b"><span class="opt-letter">B</span><span class="opt-text">Lead a healthy life.</span></label>
-            <label class="option"><input type="radio" name="q2" value="c"><span class="opt-letter">C</span><span class="opt-text">Stop eating fruit.</span></label>
-            <label class="option"><input type="radio" name="q2" value="d"><span class="opt-letter">D</span><span class="opt-text">Sleep all day.</span></label>
+        <article class="question">
+            <h2>2. What did the doctor tell the man?</h2>
+            <label class="option"><input type="radio" name="q2" value="a"> A) Eat more cake.</label>
+            <label class="option"><input type="radio" name="q2" value="b"> B) Lead a healthy life.</label>
+            <label class="option"><input type="radio" name="q2" value="c"> C) Stop eating fruit.</label>
+            <label class="option"><input type="radio" name="q2" value="d"> D) Sleep all day.</label>
             <div class="feedback" id="fb2"></div>
         </article>
 
-        <article class="question" data-q="3">
-            <h2><span class="q-num">3</span> What food does the man try NOT to eat too much?</h2>
-            <label class="option"><input type="radio" name="q3" value="a"><span class="opt-letter">A</span><span class="opt-text">Bread and rice</span></label>
-            <label class="option"><input type="radio" name="q3" value="b"><span class="opt-letter">B</span><span class="opt-text">Fruit and vegetables</span></label>
-            <label class="option"><input type="radio" name="q3" value="c"><span class="opt-letter">C</span><span class="opt-text">Meat and fish</span></label>
-            <label class="option"><input type="radio" name="q3" value="d"><span class="opt-letter">D</span><span class="opt-text">Milk and cheese</span></label>
+        <article class="question">
+            <h2>3. What food does the man try NOT to eat too much?</h2>
+            <label class="option"><input type="radio" name="q3" value="a"> A) Bread and rice</label>
+            <label class="option"><input type="radio" name="q3" value="b"> B) Fruit and vegetables</label>
+            <label class="option"><input type="radio" name="q3" value="c"> C) Meat and fish</label>
+            <label class="option"><input type="radio" name="q3" value="d"> D) Milk and cheese</label>
             <div class="feedback" id="fb3"></div>
         </article>
 
         <!-- ============ AUDIO 2 (Q4-6) ============ -->
         <section class="audio-card">
-            <p class="directions">📝 Instructions: You will hear a conversation between two or more people. Choose the correct answer for each question.</p>
+            <p class="directions">Instructions: You will hear a conversation between two or more people. Choose the correct answer for each question.</p>
             <audio id="audio2"><source src="audio2.mp3" type="audio/mpeg"></audio>
             <div class="audio-controls">
-                <button type="button" class="play-btn" id="playBtn2">
-                    <span class="play-icon">▶</span>
-                    <span class="play-text">Play Audio</span>
-                </button>
-                <div class="counter-wrap">
-                    <span class="counter-label">Remaining plays</span>
-                    <span class="counter-value" id="counter2">4</span>
-                    <div class="plays-dots" data-audio="2">
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                    </div>
-                </div>
+                <button type="button" class="play-btn" id="playBtn2">Play Audio</button>
+                <span class="counter" id="counter2">Remaining plays: 4</span>
             </div>
         </section>
 
-        <article class="question" data-q="4">
-            <h2><span class="q-num">4</span> According to the doctor, which foods are best to eat?</h2>
-            <label class="option"><input type="radio" name="q4" value="a"><span class="opt-letter">A</span><span class="opt-text">Fresh fruits, vegetables, and whole grains</span></label>
-            <label class="option"><input type="radio" name="q4" value="b"><span class="opt-letter">B</span><span class="opt-text">Fried chicken, candy, and soda</span></label>
-            <label class="option"><input type="radio" name="q4" value="c"><span class="opt-letter">C</span><span class="opt-text">Fast food, cake, and coffee</span></label>
-            <label class="option"><input type="radio" name="q4" value="d"><span class="opt-letter">D</span><span class="opt-text">Ice cream, chips, and soft drinks</span></label>
+        <article class="question">
+            <h2>4. According to the doctor, which foods are best to eat?</h2>
+            <label class="option"><input type="radio" name="q4" value="a"> A) Fresh fruits, vegetables, and whole grains</label>
+            <label class="option"><input type="radio" name="q4" value="b"> B) Fried chicken, candy, and soda</label>
+            <label class="option"><input type="radio" name="q4" value="c"> C) Fast food, cake, and coffee</label>
+            <label class="option"><input type="radio" name="q4" value="d"> D) Ice cream, chips, and soft drinks</label>
             <div class="feedback" id="fb4"></div>
         </article>
 
-        <article class="question" data-q="5">
-            <h2><span class="q-num">5</span> What should you avoid to stay healthy?</h2>
-            <label class="option"><input type="radio" name="q5" value="a"><span class="opt-letter">A</span><span class="opt-text">Fruits and fresh vegetables</span></label>
-            <label class="option"><input type="radio" name="q5" value="b"><span class="opt-letter">B</span><span class="opt-text">Caffeine, sugar, and fatty foods</span></label>
-            <label class="option"><input type="radio" name="q5" value="c"><span class="opt-letter">C</span><span class="opt-text">Exercise and walking outside</span></label>
-            <label class="option"><input type="radio" name="q5" value="d"><span class="opt-letter">D</span><span class="opt-text">Drinking lots of water every day</span></label>
+        <article class="question">
+            <h2>5. What should you avoid to stay healthy?</h2>
+            <label class="option"><input type="radio" name="q5" value="a"> A) Fruits and fresh vegetables</label>
+            <label class="option"><input type="radio" name="q5" value="b"> B) Caffeine, sugar, and fatty foods</label>
+            <label class="option"><input type="radio" name="q5" value="c"> C) Exercise and walking outside</label>
+            <label class="option"><input type="radio" name="q5" value="d"> D) Drinking lots of water every day</label>
             <div class="feedback" id="fb5"></div>
         </article>
 
-        <article class="question" data-q="6">
-            <h2><span class="q-num">6</span> What does the doctor say about drinking alcohol?</h2>
-            <label class="option"><input type="radio" name="q6" value="a"><span class="opt-letter">A</span><span class="opt-text">It should be completely avoided always.</span></label>
-            <label class="option"><input type="radio" name="q6" value="b"><span class="opt-letter">B</span><span class="opt-text">Drinking as much as possible is fine.</span></label>
-            <label class="option"><input type="radio" name="q6" value="c"><span class="opt-letter">C</span><span class="opt-text">Less than one serving a day can be good.</span></label>
-            <label class="option"><input type="radio" name="q6" value="d"><span class="opt-letter">D</span><span class="opt-text">You can drink two or three glasses a day.</span></label>
+        <article class="question">
+            <h2>6. What does the doctor say about drinking alcohol?</h2>
+            <label class="option"><input type="radio" name="q6" value="a"> A) It should be completely avoided always.</label>
+            <label class="option"><input type="radio" name="q6" value="b"> B) Drinking as much as possible is fine.</label>
+            <label class="option"><input type="radio" name="q6" value="c"> C) Less than one serving a day can be good.</label>
+            <label class="option"><input type="radio" name="q6" value="d"> D) You can drink two or three glasses a day.</label>
             <div class="feedback" id="fb6"></div>
         </article>
 
         <!-- ============ AUDIO 3 (Q7-10) ============ -->
         <section class="audio-card">
-            <p class="directions">📝 Instructions: You will hear a talk. Choose the correct answer for each question.</p>
+            <p class="directions">Instructions: You will hear a talk. Choose the correct answer for each question.</p>
             <audio id="audio3"><source src="audio3.mp3" type="audio/mpeg"></audio>
             <div class="audio-controls">
-                <button type="button" class="play-btn" id="playBtn3">
-                    <span class="play-icon">▶</span>
-                    <span class="play-text">Play Audio</span>
-                </button>
-                <div class="counter-wrap">
-                    <span class="counter-label">Remaining plays</span>
-                    <span class="counter-value" id="counter3">4</span>
-                    <div class="plays-dots" data-audio="3">
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                    </div>
-                </div>
+                <button type="button" class="play-btn" id="playBtn3">Play Audio</button>
+                <span class="counter" id="counter3">Remaining plays: 4</span>
             </div>
         </section>
 
-        <article class="question" data-q="7">
-            <h2><span class="q-num">7</span> Why are students feeling stressed?</h2>
-            <label class="option"><input type="radio" name="q7" value="a"><span class="opt-letter">A</span><span class="opt-text">Because they are traveling</span></label>
-            <label class="option"><input type="radio" name="q7" value="b"><span class="opt-letter">B</span><span class="opt-text">Because they have exams soon</span></label>
-            <label class="option"><input type="radio" name="q7" value="c"><span class="opt-letter">C</span><span class="opt-text">Because they have new teachers</span></label>
-            <label class="option"><input type="radio" name="q7" value="d"><span class="opt-letter">D</span><span class="opt-text">Because they are on vacation</span></label>
+        <article class="question">
+            <h2>7. Why are students feeling stressed?</h2>
+            <label class="option"><input type="radio" name="q7" value="a"> A) Because they are traveling</label>
+            <label class="option"><input type="radio" name="q7" value="b"> B) Because they have exams soon</label>
+            <label class="option"><input type="radio" name="q7" value="c"> C) Because they have new teachers</label>
+            <label class="option"><input type="radio" name="q7" value="d"> D) Because they are on vacation</label>
             <div class="feedback" id="fb7"></div>
         </article>
 
-        <article class="question" data-q="8">
-            <h2><span class="q-num">8</span> How many hours of sleep do students need each day?</h2>
-            <label class="option"><input type="radio" name="q8" value="a"><span class="opt-letter">A</span><span class="opt-text">Five to six hours</span></label>
-            <label class="option"><input type="radio" name="q8" value="b"><span class="opt-letter">B</span><span class="opt-text">Six to seven hours</span></label>
-            <label class="option"><input type="radio" name="q8" value="c"><span class="opt-letter">C</span><span class="opt-text">Eight to nine hours</span></label>
-            <label class="option"><input type="radio" name="q8" value="d"><span class="opt-letter">D</span><span class="opt-text">Ten to eleven hours</span></label>
+        <article class="question">
+            <h2>8. How many hours of sleep do students need each day?</h2>
+            <label class="option"><input type="radio" name="q8" value="a"> A) Five to six hours</label>
+            <label class="option"><input type="radio" name="q8" value="b"> B) Six to seven hours</label>
+            <label class="option"><input type="radio" name="q8" value="c"> C) Eight to nine hours</label>
+            <label class="option"><input type="radio" name="q8" value="d"> D) Ten to eleven hours</label>
             <div class="feedback" id="fb8"></div>
         </article>
 
-        <article class="question" data-q="9">
-            <h2><span class="q-num">9</span> What kind of food should students eat?</h2>
-            <label class="option"><input type="radio" name="q9" value="a"><span class="opt-letter">A</span><span class="opt-text">A lot of sugar</span></label>
-            <label class="option"><input type="radio" name="q9" value="b"><span class="opt-letter">B</span><span class="opt-text">Fast food</span></label>
-            <label class="option"><input type="radio" name="q9" value="c"><span class="opt-letter">C</span><span class="opt-text">Nutritious food</span></label>
-            <label class="option"><input type="radio" name="q9" value="d"><span class="opt-letter">D</span><span class="opt-text">Only fruits</span></label>
+        <article class="question">
+            <h2>9. What kind of food should students eat?</h2>
+            <label class="option"><input type="radio" name="q9" value="a"> A) A lot of sugar</label>
+            <label class="option"><input type="radio" name="q9" value="b"> B) Fast food</label>
+            <label class="option"><input type="radio" name="q9" value="c"> C) Nutritious food</label>
+            <label class="option"><input type="radio" name="q9" value="d"> D) Only fruits</label>
             <div class="feedback" id="fb9"></div>
         </article>
 
-        <article class="question" data-q="10">
-            <h2><span class="q-num">10</span> What are two good types of exercise mentioned?</h2>
-            <label class="option"><input type="radio" name="q10" value="a"><span class="opt-letter">A</span><span class="opt-text">Swimming and dancing</span></label>
-            <label class="option"><input type="radio" name="q10" value="b"><span class="opt-letter">B</span><span class="opt-text">Running and walking fast</span></label>
-            <label class="option"><input type="radio" name="q10" value="c"><span class="opt-letter">C</span><span class="opt-text">Playing video games</span></label>
-            <label class="option"><input type="radio" name="q10" value="d"><span class="opt-letter">D</span><span class="opt-text">Watching TV</span></label>
+        <article class="question">
+            <h2>10. What are two good types of exercise mentioned?</h2>
+            <label class="option"><input type="radio" name="q10" value="a"> A) Swimming and dancing</label>
+            <label class="option"><input type="radio" name="q10" value="b"> B) Running and walking fast</label>
+            <label class="option"><input type="radio" name="q10" value="c"> C) Playing video games</label>
+            <label class="option"><input type="radio" name="q10" value="d"> D) Watching TV</label>
             <div class="feedback" id="fb10"></div>
         </article>
 
         <!-- ============ AUDIO 4 (Q11-15) ============ -->
         <section class="audio-card">
-            <p class="directions">📝 Instructions: You will hear a talk. Choose the correct answer for each question.</p>
+            <p class="directions">Instructions: You will hear a talk. Choose the correct answer for each question.</p>
             <audio id="audio4"><source src="audio4.mp3" type="audio/mpeg"></audio>
             <div class="audio-controls">
-                <button type="button" class="play-btn" id="playBtn4">
-                    <span class="play-icon">▶</span>
-                    <span class="play-text">Play Audio</span>
-                </button>
-                <div class="counter-wrap">
-                    <span class="counter-label">Remaining plays</span>
-                    <span class="counter-value" id="counter4">4</span>
-                    <div class="plays-dots" data-audio="4">
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                        <span class="dot active"></span>
-                    </div>
-                </div>
+                <button type="button" class="play-btn" id="playBtn4">Play Audio</button>
+                <span class="counter" id="counter4">Remaining plays: 4</span>
             </div>
         </section>
 
-        <article class="question" data-q="11">
-            <h2><span class="q-num">11</span> Where do people use AI?</h2>
-            <label class="option"><input type="radio" name="q11" value="a"><span class="opt-letter">A</span><span class="opt-text">Only at school</span></label>
-            <label class="option"><input type="radio" name="q11" value="b"><span class="opt-letter">B</span><span class="opt-text">Only in computers</span></label>
-            <label class="option"><input type="radio" name="q11" value="c"><span class="opt-letter">C</span><span class="opt-text">In daily activities like phones and videos</span></label>
-            <label class="option"><input type="radio" name="q11" value="d"><span class="opt-letter">D</span><span class="opt-text">Only in jobs</span></label>
+        <article class="question">
+            <h2>11. Where do people use AI?</h2>
+            <label class="option"><input type="radio" name="q11" value="a"> A) Only at school</label>
+            <label class="option"><input type="radio" name="q11" value="b"> B) Only in computers</label>
+            <label class="option"><input type="radio" name="q11" value="c"> C) In daily activities like phones and videos</label>
+            <label class="option"><input type="radio" name="q11" value="d"> D) Only in jobs</label>
             <div class="feedback" id="fb11"></div>
         </article>
 
-        <article class="question" data-q="12">
-            <h2><span class="q-num">12</span> How can AI help students?</h2>
-            <label class="option"><input type="radio" name="q12" value="a"><span class="opt-letter">A</span><span class="opt-text">By giving quick information and explanations</span></label>
-            <label class="option"><input type="radio" name="q12" value="b"><span class="opt-letter">B</span><span class="opt-text">By replacing teachers</span></label>
-            <label class="option"><input type="radio" name="q12" value="c"><span class="opt-letter">C</span><span class="opt-text">By giving exams</span></label>
-            <label class="option"><input type="radio" name="q12" value="d"><span class="opt-letter">D</span><span class="opt-text">By reducing homework</span></label>
+        <article class="question">
+            <h2>12. How can AI help students?</h2>
+            <label class="option"><input type="radio" name="q12" value="a"> A) By giving quick information and explanations</label>
+            <label class="option"><input type="radio" name="q12" value="b"> B) By replacing teachers</label>
+            <label class="option"><input type="radio" name="q12" value="c"> C) By giving exams</label>
+            <label class="option"><input type="radio" name="q12" value="d"> D) By reducing homework</label>
             <div class="feedback" id="fb12"></div>
         </article>
 
-        <article class="question" data-q="13">
-            <h2><span class="q-num">13</span> What is a negative effect of AI?</h2>
-            <label class="option"><input type="radio" name="q13" value="a"><span class="opt-letter">A</span><span class="opt-text">It makes students read more.</span></label>
-            <label class="option"><input type="radio" name="q13" value="b"><span class="opt-letter">B</span><span class="opt-text">It helps students too much.</span></label>
-            <label class="option"><input type="radio" name="q13" value="c"><span class="opt-letter">C</span><span class="opt-text">Students may stop thinking for themselves.</span></label>
-            <label class="option"><input type="radio" name="q13" value="d"><span class="opt-letter">D</span><span class="opt-text">It improves memory.</span></label>
+        <article class="question">
+            <h2>13. What is a negative effect of AI?</h2>
+            <label class="option"><input type="radio" name="q13" value="a"> A) It makes students read more.</label>
+            <label class="option"><input type="radio" name="q13" value="b"> B) It helps students too much.</label>
+            <label class="option"><input type="radio" name="q13" value="c"> C) Students may stop thinking for themselves.</label>
+            <label class="option"><input type="radio" name="q13" value="d"> D) It improves memory.</label>
             <div class="feedback" id="fb13"></div>
         </article>
 
-        <article class="question" data-q="14">
-            <h2><span class="q-num">14</span> What do some people worry about?</h2>
-            <label class="option"><input type="radio" name="q14" value="a"><span class="opt-letter">A</span><span class="opt-text">AI is too slow.</span></label>
-            <label class="option"><input type="radio" name="q14" value="b"><span class="opt-letter">B</span><span class="opt-text">AI uses too much electricity.</span></label>
-            <label class="option"><input type="radio" name="q14" value="c"><span class="opt-letter">C</span><span class="opt-text">AI can replace some jobs.</span></label>
-            <label class="option"><input type="radio" name="q14" value="d"><span class="opt-letter">D</span><span class="opt-text">AI is too easy to use.</span></label>
+        <article class="question">
+            <h2>14. What do some people worry about?</h2>
+            <label class="option"><input type="radio" name="q14" value="a"> A) AI is too slow.</label>
+            <label class="option"><input type="radio" name="q14" value="b"> B) AI uses too much electricity.</label>
+            <label class="option"><input type="radio" name="q14" value="c"> C) AI can replace some jobs.</label>
+            <label class="option"><input type="radio" name="q14" value="d"> D) AI is too easy to use.</label>
             <div class="feedback" id="fb14"></div>
         </article>
 
-        <article class="question" data-q="15">
-            <h2><span class="q-num">15</span> What is the main idea of the talk?</h2>
-            <label class="option"><input type="radio" name="q15" value="a"><span class="opt-letter">A</span><span class="opt-text">AI is dangerous for students.</span></label>
-            <label class="option"><input type="radio" name="q15" value="b"><span class="opt-letter">B</span><span class="opt-text">AI is useful but must be used carefully.</span></label>
-            <label class="option"><input type="radio" name="q15" value="c"><span class="opt-letter">C</span><span class="opt-text">AI only helps teachers.</span></label>
-            <label class="option"><input type="radio" name="q15" value="d"><span class="opt-letter">D</span><span class="opt-text">AI is not important.</span></label>
+        <article class="question">
+            <h2>15. What is the main idea of the talk?</h2>
+            <label class="option"><input type="radio" name="q15" value="a"> A) AI is dangerous for students.</label>
+            <label class="option"><input type="radio" name="q15" value="b"> B) AI is useful but must be used carefully.</label>
+            <label class="option"><input type="radio" name="q15" value="c"> C) AI only helps teachers.</label>
+            <label class="option"><input type="radio" name="q15" value="d"> D) AI is not important.</label>
             <div class="feedback" id="fb15"></div>
         </article>
 
         <!-- ============ MATCHING SECTION ============ -->
-        <h2 class="section-title">
-            <span class="section-num">2</span>
-            Matching
-            <span class="section-points">5 points</span>
-        </h2>
+        <h2 class="section-title">Matching — 5 points</h2>
 
         <div class="matching-intro">
-            <p><strong>📋 Instructions:</strong> In Column A, you have the names of five teenagers. In Column B, you have different ideas about social media. You will hear five teenagers talking about social media. After listening to each speaker, match the idea in Column B with the correct name in Column A.</p>
+            <p><strong>Instructions:</strong> In Column A, you have the names of five teenagers. In Column B, you have different ideas about social media. You will hear five teenagers talking about social media. After listening to each speaker, match the idea in Column B with the correct name in Column A.</p>
         </div>
 
+        <!-- 5 audio players for the matching -->
         <div class="matching-audios">
-            <div class="mini-audio" data-speaker="elizabeth">
+            <div class="mini-audio">
                 <span class="mini-label">Elizabeth</span>
                 <audio id="audio5"><source src="audio5.mp3" type="audio/mpeg"></audio>
-                <button type="button" class="play-btn" id="playBtn5">
-                    <span class="play-icon">▶</span>
-                </button>
-                <span class="counter mini-counter" id="counter5">4 left</span>
+                <button type="button" class="play-btn" id="playBtn5">▶ Play</button>
+                <span class="counter" id="counter5">4 plays left</span>
             </div>
-            <div class="mini-audio" data-speaker="ruth">
+            <div class="mini-audio">
                 <span class="mini-label">Ruth</span>
                 <audio id="audio6"><source src="audio6.mp3" type="audio/mpeg"></audio>
-                <button type="button" class="play-btn" id="playBtn6">
-                    <span class="play-icon">▶</span>
-                </button>
-                <span class="counter mini-counter" id="counter6">4 left</span>
+                <button type="button" class="play-btn" id="playBtn6">▶ Play</button>
+                <span class="counter" id="counter6">4 plays left</span>
             </div>
-            <div class="mini-audio" data-speaker="brian">
+            <div class="mini-audio">
                 <span class="mini-label">Brian</span>
                 <audio id="audio7"><source src="audio7.mp3" type="audio/mpeg"></audio>
-                <button type="button" class="play-btn" id="playBtn7">
-                    <span class="play-icon">▶</span>
-                </button>
-                <span class="counter mini-counter" id="counter7">4 left</span>
+                <button type="button" class="play-btn" id="playBtn7">▶ Play</button>
+                <span class="counter" id="counter7">4 plays left</span>
             </div>
-            <div class="mini-audio" data-speaker="daniel">
+            <div class="mini-audio">
                 <span class="mini-label">Daniel</span>
                 <audio id="audio8"><source src="audio8.mp3" type="audio/mpeg"></audio>
-                <button type="button" class="play-btn" id="playBtn8">
-                    <span class="play-icon">▶</span>
-                </button>
-                <span class="counter mini-counter" id="counter8">4 left</span>
+                <button type="button" class="play-btn" id="playBtn8">▶ Play</button>
+                <span class="counter" id="counter8">4 plays left</span>
             </div>
-            <div class="mini-audio" data-speaker="sofia">
+            <div class="mini-audio">
                 <span class="mini-label">Sofia</span>
                 <audio id="audio9"><source src="audio9.mp3" type="audio/mpeg"></audio>
-                <button type="button" class="play-btn" id="playBtn9">
-                    <span class="play-icon">▶</span>
-                </button>
-                <span class="counter mini-counter" id="counter9">4 left</span>
+                <button type="button" class="play-btn" id="playBtn9">▶ Play</button>
+                <span class="counter" id="counter9">4 plays left</span>
             </div>
         </div>
 
+        <!-- Matching table: Column A (left) + Column B (right) -->
         <div class="matching-table">
             <div class="matching-header">
-                <div>👥 Column A</div>
-                <div>💭 Column B</div>
+                <div>Column A</div>
+                <div>Column B</div>
             </div>
 
             <div class="matching-row">
@@ -456,10 +342,7 @@
         </div>
 
         <div class="submit-wrap">
-            <button type="submit" class="submit-btn">
-                <span class="btn-icon">✓</span>
-                <span>Check Answers</span>
-            </button>
+            <button type="submit" class="submit-btn">Check Answers</button>
         </div>
 
         <div id="saveStatus" class="save-status"></div>
@@ -472,9 +355,6 @@
 <footer class="site-footer">
     <p>Colegio Nocturno de Cariari · Listening Exam I · Teacher: Saiden Ortiz Gómez</p>
 </footer>
-
-<!-- Confetti container (for high scores) -->
-<canvas id="confettiCanvas"></canvas>
 
 <script src="script.js"></script>
 </body>

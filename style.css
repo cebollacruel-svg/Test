@@ -243,67 +243,112 @@ body{
 
 .matching-intro p{ margin: 0; }
 
-.column-b-card{
-    background: #fffbeb;
-    border: 1px solid #fde68a;
+/* The 5 mini audio players above the table */
+.matching-audios{
+    background: #fff;
+    border: 1px solid var(--gray-200);
     border-radius: var(--radius);
     padding: 16px 22px;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
     box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
 }
 
-.column-b-card h3{
-    color: #92400e;
-    margin: 0 0 10px 0;
+.mini-audio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    background: var(--gray-100);
+    text-align: center;
+}
+
+.mini-label{
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 14px;
+}
+
+.mini-audio .play-btn{
+    padding: 6px 14px;
+    font-size: 13px;
+    width: 100%;
+}
+
+.mini-audio .counter{
+    font-size: 12px;
+}
+
+/* Matching table — two columns side by side */
+.matching-table{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 12px 22px 18px 22px;
+    box-shadow: var(--shadow);
+    margin-bottom: 22px;
+}
+
+.matching-header{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 16px;
+    border-bottom: 2px solid var(--primary);
+    padding: 10px 0;
+    margin-bottom: 8px;
+}
+
+.matching-row{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--gray-200);
+    align-items: start;
+}
+
+.matching-row:last-of-type{ border-bottom: none; }
+
+.col-a{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--gray-900);
     font-size: 15px;
 }
 
-.topics-list{
-    margin: 0;
-    padding-left: 0;
-    list-style: none;
+.col-a .name{
+    margin-right: 8px;
 }
 
-.topics-list li{
-    padding: 8px 0;
-    border-bottom: 1px dashed #fde68a;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.topics-list li:last-child{ border-bottom: none; }
-
-.topics-list strong{
-    color: #92400e;
-    font-weight: 700;
-    margin-right: 6px;
-}
-
-.column-a-header{
-    color: var(--primary);
-    font-size: 17px;
-    margin: 10px 0 14px 0;
-    padding-bottom: 6px;
-    border-bottom: 2px solid var(--primary);
-}
-
-.matching-card .match-row{
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px dashed var(--gray-200);
-}
-
-.match-row label{
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    font-size: 16px;
+.col-a .paren{
+    font-size: 18px;
     color: var(--gray-700);
 }
 
+.col-b{
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--gray-900);
+}
+
+.col-b strong{
+    color: var(--primary);
+    font-weight: 700;
+    margin-right: 4px;
+}
+
 .match-select{
-    padding: 6px 10px;
+    padding: 6px 8px;
     border: 2px solid var(--primary);
     border-radius: 6px;
     font-size: 15px;
@@ -311,13 +356,17 @@ body{
     background: white;
     color: var(--primary);
     cursor: pointer;
-    min-width: 65px;
+    min-width: 60px;
     text-align: center;
 }
 
 .match-select:focus{
     outline: none;
     background: var(--primary-light);
+}
+
+.feedback-match{
+    margin: 6px 0 6px 0;
 }
 
 /* =========================================================
@@ -420,8 +469,20 @@ body{
 }
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE — mobile: stack matching columns
    ========================================================= */
+@media (max-width: 700px){
+    .matching-header,
+    .matching-row{
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .matching-header div:nth-child(2){
+        border-top: 1px solid var(--gray-200);
+        padding-top: 6px;
+    }
+}
+
 @media (max-width: 600px){
     .wrapper{ padding: 0 10px; }
     .site-header{ font-size: 18px; }

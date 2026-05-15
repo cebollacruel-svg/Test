@@ -1,325 +1,492 @@
 /* =========================================================
-   COLEGIO NOCTURNO DE CARIARI - LISTENING EXAM
-   Enhanced with animations, progress tracking & confetti
+   GLOBAL RESET & VARIABLES
    ========================================================= */
+:root{
+    --primary: #003399;
+    --primary-dark: #002277;
+    --primary-light: #d9e8ff;
+    --success: #16a34a;
+    --success-dark: #15803d;
+    --success-bg: #ecfdf5;
+    --error: #dc2626;
+    --error-bg: #fef2f2;
+    --gray-100: #f5f7fb;
+    --gray-200: #e5e7eb;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+}
 
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2qTBUwWN5_zsBrGhslaw4asYc0EiY-TohO-DfRrU7aBFg42Zu0xmOkpT0yfmV5O6l/exec";
+*{ box-sizing: border-box; }
 
+body{
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    font-size: 15px;
+    background: var(--gray-100);
+    color: var(--gray-900);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
 
-/* ---------------------------------------------------------
-   1. AUDIO CONTROLLER (with playing animation + dots)
---------------------------------------------------------- */
-class AudioController {
-    constructor(audioId, buttonId, counterId, audioNum, maxPlays = 4){
-        this.audio = document.getElementById(audioId);
-        this.button = document.getElementById(buttonId);
-        this.counter = document.getElementById(counterId);
-        this.dots = document.querySelector(`.plays-dots[data-audio="${audioNum}"]`);
-        this.maxPlays = maxPlays;
-        this.plays = 0;
-        this.isMini = counterId.includes("counter") && this.counter.classList.contains("mini-counter");
+/* =========================================================
+   HEADER & FOOTER
+   ========================================================= */
+.site-header{
+    background: var(--primary);
+    color: #fff;
+    padding: 18px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+}
 
-        this.button.addEventListener("click", () => this.play());
+.site-subheader{
+    background: var(--primary-light);
+    border-bottom: 1px solid var(--primary);
+    padding: 10px 15px;
+    text-align: center;
+    color: var(--primary);
+    font-weight: 600;
+}
 
-        // When audio ends, remove "playing" class
-        this.audio.addEventListener("ended", () => {
-            this.button.classList.remove("playing");
-            this.updateUI();
-        });
+.site-footer{
+    text-align: center;
+    padding: 24px;
+    color: var(--gray-500);
+    font-size: 13px;
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+.wrapper{
+    max-width: 880px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.intro{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+}
+
+.intro p{ margin: 0 0 8px 0; }
+.intro p:last-of-type{ margin-bottom: 0; }
+
+.section-title{
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--primary);
+    margin: 36px 0 16px 0;
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   CAMPO DEL ESTUDIANTE
+   ========================================================= */
+.student-info{
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--gray-200);
+}
+
+.student-info label{
+    display: block;
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.student-info input{
+    padding: 10px 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.student-info input:focus{
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* =========================================================
+   AUDIO PLAYER CARD
+   ========================================================= */
+.audio-card{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.audio-card h3{
+    margin: 0 0 8px 0;
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.directions{
+    font-size: 13px;
+    color: var(--gray-500);
+    font-style: italic;
+    margin: 0 0 12px 0;
+}
+
+.audio-controls{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.play-btn{
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.play-btn:hover:not(:disabled){
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.play-btn:disabled{
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.counter{
+    color: var(--error);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* =========================================================
+   QUESTIONS (multiple choice)
+   ========================================================= */
+.question{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.question:hover{
+    box-shadow: var(--shadow-md);
+}
+
+.question h2{
+    font-size: 16px;
+    margin: 0 0 14px 0;
+    color: var(--gray-900);
+}
+
+.option{
+    display: block;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.option:hover{
+    background: #f3f4f6;
+    border-color: var(--primary);
+}
+
+.option input{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   MATCHING SECTION
+   ========================================================= */
+.matching-intro{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+}
+
+.matching-intro p{ margin: 0; }
+
+/* The 5 mini audio players above the table */
+.matching-audios{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.mini-audio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    background: var(--gray-100);
+    text-align: center;
+}
+
+.mini-label{
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 14px;
+}
+
+.mini-audio .play-btn{
+    padding: 6px 14px;
+    font-size: 13px;
+    width: 100%;
+}
+
+.mini-audio .counter{
+    font-size: 12px;
+}
+
+/* Matching table — two columns side by side */
+.matching-table{
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 12px 22px 18px 22px;
+    box-shadow: var(--shadow);
+    margin-bottom: 22px;
+}
+
+.matching-header{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 16px;
+    border-bottom: 2px solid var(--primary);
+    padding: 10px 0;
+    margin-bottom: 8px;
+}
+
+.matching-row{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--gray-200);
+    align-items: start;
+}
+
+.matching-row:last-of-type{ border-bottom: none; }
+
+.col-a{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--gray-900);
+    font-size: 15px;
+}
+
+.col-a .name{
+    margin-right: 8px;
+}
+
+.col-a .paren{
+    font-size: 18px;
+    color: var(--gray-700);
+}
+
+.col-b{
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--gray-900);
+}
+
+.col-b strong{
+    color: var(--primary);
+    font-weight: 700;
+    margin-right: 4px;
+}
+
+.match-select{
+    padding: 6px 8px;
+    border: 2px solid var(--primary);
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    background: white;
+    color: var(--primary);
+    cursor: pointer;
+    min-width: 60px;
+    text-align: center;
+}
+
+.match-select:focus{
+    outline: none;
+    background: var(--primary-light);
+}
+
+.feedback-match{
+    margin: 6px 0 6px 0;
+}
+
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
+.feedback{
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.feedback.correct{
+    background: var(--success-bg);
+    border-left: 4px solid var(--success);
+    color: #14532d;
+}
+
+.feedback.incorrect{
+    background: var(--error-bg);
+    border-left: 4px solid var(--error);
+    color: #7f1d1d;
+}
+
+.feedback strong{
+    display: block;
+    margin-bottom: 4px;
+}
+
+@keyframes fadeIn{
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   BUTTONS & RESULT
+   ========================================================= */
+.submit-wrap{
+    text-align: center;
+    margin: 28px 0;
+}
+
+.submit-btn{
+    background: var(--success);
+    color: #fff;
+    border: none;
+    padding: 14px 40px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.submit-btn:hover{
+    background: var(--success-dark);
+    transform: translateY(-1px);
+}
+
+.result{
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+}
+
+/* =========================================================
+   SAVE STATUS
+   ========================================================= */
+.save-status{
+    text-align: center;
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    display: none;
+}
+
+.save-status.saving{
+    background: #fef3c7;
+    color: #92400e;
+    display: block;
+}
+
+.save-status.saved{
+    background: var(--success-bg);
+    color: var(--success-dark);
+    display: block;
+}
+
+.save-status.error{
+    background: var(--error-bg);
+    color: var(--error);
+    display: block;
+}
+
+/* =========================================================
+   RESPONSIVE — mobile: stack matching columns
+   ========================================================= */
+@media (max-width: 700px){
+    .matching-header,
+    .matching-row{
+        grid-template-columns: 1fr;
+        gap: 8px;
     }
-
-    play(){
-        if(this.plays >= this.maxPlays) return;
-
-        this.audio.currentTime = 0;
-        this.audio.play();
-        this.plays++;
-        this.button.classList.add("playing");
-
-        // Update counter
-        const remaining = this.maxPlays - this.plays;
-        if(this.isMini){
-            this.counter.textContent = remaining + " left";
-        } else {
-            this.counter.textContent = remaining;
-        }
-
-        // Update dots (fade out one)
-        if(this.dots){
-            const activeDots = this.dots.querySelectorAll(".dot.active");
-            if(activeDots.length > 0){
-                activeDots[activeDots.length - 1].classList.remove("active");
-            }
-        }
-    }
-
-    updateUI(){
-        if(this.plays >= this.maxPlays){
-            this.button.disabled = true;
-            const text = this.button.querySelector(".play-text");
-            if(text){
-                text.textContent = "No More Plays";
-            } else {
-                this.button.querySelector(".play-icon").textContent = "✕";
-            }
-        }
+    .matching-header div:nth-child(2){
+        border-top: 1px solid var(--gray-200);
+        padding-top: 6px;
     }
 }
 
-// Create 9 audio controllers
-new AudioController("audio1", "playBtn1", "counter1", "1");
-new AudioController("audio2", "playBtn2", "counter2", "2");
-new AudioController("audio3", "playBtn3", "counter3", "3");
-new AudioController("audio4", "playBtn4", "counter4", "4");
-new AudioController("audio5", "playBtn5", "counter5", "5");
-new AudioController("audio6", "playBtn6", "counter6", "6");
-new AudioController("audio7", "playBtn7", "counter7", "7");
-new AudioController("audio8", "playBtn8", "counter8", "8");
-new AudioController("audio9", "playBtn9", "counter9", "9");
-
-
-/* ---------------------------------------------------------
-   2. ANSWER KEY
---------------------------------------------------------- */
-const answers = {
-    q1: { correct: "b", explanation: "The man chose healthy food because he is trying to take care of his diet — he wants to eat healthy food." },
-    q2: { correct: "b", explanation: "The doctor's main advice was to lead a healthy life, which is why the man is changing his eating habits." },
-    q3: { correct: "a", explanation: "The man tries to limit bread and rice. Fruits and vegetables are encouraged, not avoided." },
-    q4: { correct: "a", explanation: "The doctor recommends fresh fruits, vegetables, and whole grains as the best choices for a healthy diet." },
-    q5: { correct: "b", explanation: "Caffeine, sugar, and fatty foods are the things to avoid. Fruits, exercise, and water are all healthy." },
-    q6: { correct: "c", explanation: "The doctor explains that drinking less than one serving of alcohol per day can actually have some benefits." },
-    q7: { correct: "b", explanation: "Students are feeling stressed because they have exams coming up soon." },
-    q8: { correct: "c", explanation: "The recommended amount of sleep for students is eight to nine hours per day." },
-    q9: { correct: "c", explanation: "Students should eat nutritious food to manage stress and stay healthy." },
-    q10: { correct: "b", explanation: "The two good types of exercise mentioned are running and walking fast." },
-    q11: { correct: "c", explanation: "People use AI in daily activities like phones and videos — not only in schools, computers, or jobs." },
-    q12: { correct: "a", explanation: "AI helps students by giving quick information and explanations, not by replacing teachers." },
-    q13: { correct: "c", explanation: "A negative effect is that students may stop thinking for themselves when they rely too much on AI." },
-    q14: { correct: "c", explanation: "Some people worry that AI could replace some jobs in the future." },
-    q15: { correct: "b", explanation: "The main idea of the talk is that AI is useful but must be used carefully." },
-    q16: { correct: "d", explanation: "Elizabeth → D. She talks about how social media has both positive and negative effects on social interaction." },
-    q17: { correct: "c", explanation: "Ruth → C. She mentions that social media lets young people express themselves and connect, but can create unrealistic perceptions of others' lives." },
-    q18: { correct: "a", explanation: "Brian → A. He discusses how social media helps teenagers communicate and share ideas, but anonymity and online content can negatively influence them." },
-    q19: { correct: "e", explanation: "Daniel → E. He focuses on how social media helps learning but can distract students from studying." },
-    q20: { correct: "b", explanation: "Sofia → B. She says social media is entertaining but can affect health and habits." }
-};
-
-
-/* ---------------------------------------------------------
-   3. PROGRESS BAR — tracks how many questions answered
---------------------------------------------------------- */
-function updateProgress(){
-    const total = Object.keys(answers).length;
-    let answered = 0;
-
-    for(const key in answers){
-        const radio = document.querySelector(`input[name="${key}"]:checked`);
-        const select = document.querySelector(`select[name="${key}"]`);
-        if(radio) answered++;
-        else if(select && select.value) answered++;
-    }
-
-    const percent = Math.round((answered / total) * 100);
-    document.getElementById("progressBar").style.setProperty("--progress", percent + "%");
-    document.getElementById("progressText").textContent = `${answered} / ${total} answered`;
-
-    // Mark question cards as "answered"
-    for(const key in answers){
-        const num = key.substring(1);
-        const card = document.querySelector(`.question[data-q="${num}"]`);
-        if(!card) continue;
-        const radio = document.querySelector(`input[name="${key}"]:checked`);
-        if(radio) card.classList.add("answered");
-        else card.classList.remove("answered");
-    }
+@media (max-width: 600px){
+    .wrapper{ padding: 0 10px; }
+    .site-header{ font-size: 18px; }
+    .section-title{ font-size: 17px; }
+    .question h2{ font-size: 15px; }
+    .submit-btn{ width: 100%; }
 }
-
-// Listen for any input/select change
-document.addEventListener("change", e => {
-    if(e.target.matches('input[type="radio"], select.match-select')){
-        updateProgress();
-    }
-});
-
-
-/* ---------------------------------------------------------
-   4. QUIZ SUBMISSION
---------------------------------------------------------- */
-function checkAnswers(event){
-    event.preventDefault();
-
-    const nombre = document.getElementById("studentName").value.trim();
-    if(!nombre){
-        const nameField = document.getElementById("studentName");
-        nameField.focus();
-        nameField.style.borderColor = "var(--error)";
-        nameField.style.boxShadow = "0 0 0 4px rgba(239, 68, 68, 0.2)";
-        alert("⚠ Please write your name before submitting.");
-        setTimeout(() => {
-            nameField.style.borderColor = "";
-            nameField.style.boxShadow = "";
-        }, 2500);
-        return;
-    }
-
-    let score = 0;
-    const total = Object.keys(answers).length;
-
-    for(const key in answers){
-        const radio = document.querySelector(`input[name="${key}"]:checked`);
-        const select = document.querySelector(`select[name="${key}"]`);
-        const selectedValue = radio ? radio.value : (select ? select.value : "");
-
-        const fb = document.getElementById("fb" + key.substring(1));
-        const correctAnswer = answers[key].correct;
-        const correctDisplay = correctAnswer.toUpperCase();
-        const explanation = answers[key].explanation;
-        fb.style.display = "block";
-
-        if(!selectedValue){
-            fb.className = "feedback incorrect";
-            fb.innerHTML = `<strong>⚠ No answer selected</strong>Correct answer: <b>${correctDisplay}</b>. ${explanation}`;
-        } else if(selectedValue === correctAnswer){
-            score++;
-            fb.className = "feedback correct";
-            fb.innerHTML = `<strong>✓ Correct!</strong>${explanation}`;
-        } else {
-            fb.className = "feedback incorrect";
-            fb.innerHTML = `<strong>✗ Incorrect</strong>The correct answer is <b>${correctDisplay}</b>. ${explanation}`;
-        }
-    }
-
-    const percent = Math.round((score / total) * 100);
-    displayResult(score, total, percent);
-
-    guardarEnGoogleSheets({
-        nombre: nombre,
-        puntaje: `${score}/${total} (${percent}%)`
-    });
-
-    // Disable submit button to prevent double submissions
-    const btn = document.querySelector(".submit-btn");
-    btn.disabled = true;
-    btn.style.opacity = "0.6";
-
-    // Scroll to result
-    setTimeout(() => {
-        document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 300);
-
-    // Confetti if high score (≥80%)
-    if(percent >= 80) launchConfetti();
-}
-
-function displayResult(score, total, percent){
-    const resultEl = document.getElementById("result");
-    const passed = percent >= 60;
-    let emoji = "📊";
-    if(percent >= 90) emoji = "🏆";
-    else if(percent >= 80) emoji = "🎉";
-    else if(percent >= 70) emoji = "👍";
-    else if(percent >= 60) emoji = "✅";
-    else emoji = "📚";
-
-    resultEl.innerHTML = `${emoji} Final Score: ${score} / ${total} (${percent}%)`;
-    resultEl.className = "result show " + (passed ? "passed" : "failed");
-}
-
-
-/* ---------------------------------------------------------
-   5. CONFETTI EFFECT (for high scores)
---------------------------------------------------------- */
-function launchConfetti(){
-    const canvas = document.getElementById("confettiCanvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const colors = ["#4f46e5", "#ec4899", "#10b981", "#f59e0b", "#06b6d4"];
-    const particles = [];
-
-    for(let i = 0; i < 150; i++){
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: -20,
-            vx: (Math.random() - 0.5) * 6,
-            vy: Math.random() * 4 + 2,
-            size: Math.random() * 8 + 4,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            rotation: Math.random() * 360,
-            rotationSpeed: (Math.random() - 0.5) * 10
-        });
-    }
-
-    let frames = 0;
-    const maxFrames = 200;
-
-    function animate(){
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vy += 0.1;
-            p.rotation += p.rotationSpeed;
-
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.rotation * Math.PI / 180);
-            ctx.fillStyle = p.color;
-            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
-            ctx.restore();
-        });
-
-        frames++;
-        if(frames < maxFrames){
-            requestAnimationFrame(animate);
-        } else {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-    }
-    animate();
-}
-
-
-/* ---------------------------------------------------------
-   6. GOOGLE SHEETS
---------------------------------------------------------- */
-function guardarEnGoogleSheets(datos){
-    const statusEl = document.getElementById("saveStatus");
-
-    if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PEGA_AQUI")){
-        statusEl.className = "save-status error";
-        statusEl.textContent = "⚠ Google Sheets URL is not configured.";
-        return;
-    }
-
-    statusEl.className = "save-status saving";
-    statusEl.textContent = "💾 Saving your results...";
-
-    fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(datos)
-    })
-    .then(response => response.json())
-    .then(result => {
-        if(result.success){
-            statusEl.className = "save-status saved";
-            statusEl.textContent = `✓ Results saved successfully. Good job, ${datos.nombre}!`;
-        } else {
-            throw new Error(result.error || "Unknown error");
-        }
-    })
-    .catch(err => {
-        console.error("Save error:", err);
-        statusEl.className = "save-status error";
-        statusEl.textContent = "⚠ Could not save the results. Check your internet connection.";
-    });
-}
-
-
-/* ---------------------------------------------------------
-   7. INITIALIZE
---------------------------------------------------------- */
-document.getElementById("quizForm").addEventListener("submit", checkAnswers);
-updateProgress();

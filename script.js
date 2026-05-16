@@ -136,7 +136,7 @@ function checkAnswers(event){
 
 function displayResult(score, total, percent){
     const resultEl = document.getElementById("result");
-    const passed = percent >= 60;
+    const passed = percent >= 10;
     resultEl.innerHTML = "Final Score: " + score + " / " + total + " (" + percent + "%)";
     resultEl.style.background = passed ? "var(--success-bg)" : "var(--error-bg)";
     resultEl.style.color = passed ? "var(--success-dark)" : "var(--error)";

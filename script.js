@@ -36,15 +36,15 @@ class AudioController {
 }
 
 // Crear los 9 controladores de audio
-new AudioController("audio1", "playBtn1", "counter1"); // A Healthy Lifestyle
-new AudioController("audio2", "playBtn2", "counter2"); // Staying Healthy
-new AudioController("audio3", "playBtn3", "counter3"); // Stress
-new AudioController("audio4", "playBtn4", "counter4"); // AI
-new AudioController("audio5", "playBtn5", "counter5"); // Elizabeth
-new AudioController("audio6", "playBtn6", "counter6"); // Ruth
-new AudioController("audio7", "playBtn7", "counter7"); // Brian
-new AudioController("audio8", "playBtn8", "counter8"); // Daniel
-new AudioController("audio9", "playBtn9", "counter9"); // Sofia
+new AudioController("audio1", "playBtn1", "counter1");
+new AudioController("audio2", "playBtn2", "counter2");
+new AudioController("audio3", "playBtn3", "counter3");
+new AudioController("audio4", "playBtn4", "counter4");
+new AudioController("audio5", "playBtn5", "counter5");
+new AudioController("audio6", "playBtn6", "counter6");
+new AudioController("audio7", "playBtn7", "counter7");
+new AudioController("audio8", "playBtn8", "counter8");
+new AudioController("audio9", "playBtn9", "counter9");
 
 
 /* ---------------------------------------------------------
@@ -97,7 +97,7 @@ function checkAnswers(event){
     }
 
     let score = 0;
-    const total = Object.keys(answers).length;
+    const total = Object.keys(answers).length;  // 20 preguntas
 
     for(const key in answers){
         const radio = document.querySelector('input[name="' + key + '"]:checked');
@@ -123,21 +123,37 @@ function checkAnswers(event){
         }
     }
 
-    const percent = Math.round((score / total) * 100);
-    displayResult(score, total, percent);
+    // ============================================================
+    // SISTEMA DE NOTAS:
+    // - El examen tiene 20 puntos posibles
+    // - La nota va de 0 a 100 (20 puntos × 5 = 100)
+    // - El examen vale 10% del semestre
+    // - Por eso: el porcentaje = nota × 10 / 100
+    // ============================================================
+    const nota = score * 5;                              // Nota sobre 100
+    const porcentaje = (nota * 10 / 100).toFixed(1);  // % que vale del 10%
 
+    displayResult(score, total, nota, porcentaje);
+
+    // Guardar en Google Sheets
     guardarEnGoogleSheets({
         nombre: nombre,
-        puntaje: score + "/" + total + " (" + percent + "%)"
+        puntaje: score + "/" + total + " — Nota: " + nota + "/100 (" + porcentaje + "% )"
     });
 
     document.getElementById("fb1").scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-function displayResult(score, total, percent){
+function displayResult(score, total, nota, porcentajeSemestre){
     const resultEl = document.getElementById("result");
-    const passed = percent >= 10;
-    resultEl.innerHTML = "Final Score: " + score + " / " + total + " (" + percent + "%)";
+    // Aprobado con 70 o más (criterio típico en CR; cambia el número si tu colegio usa otro)
+    const passed = nota >= 70;
+
+    resultEl.innerHTML =
+        "Puntos: " + score + " / " + total + "<br>" +
+        "Nota: <strong>" + nota + " / 100</strong><br>" +
+        "Vale: " + porcentajeSemestre + "% ";
+
     resultEl.style.background = passed ? "var(--success-bg)" : "var(--error-bg)";
     resultEl.style.color = passed ? "var(--success-dark)" : "var(--error)";
 }

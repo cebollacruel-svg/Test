@@ -1,13 +1,14 @@
 /* =========================================================
    COLEGIO NOCTURNO DE CARIARI - LISTENING EXAM
    QUIZ LOGIC + GOOGLE SHEETS
+   (Sin feedback visible para el estudiante)
    ========================================================= */
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2qTBUwWN5_zsBrGhslaw4asYc0EiY-TohO-DfRrU7aBFg42Zu0xmOkpT0yfmV5O6l/exec";
 
 
 /* ---------------------------------------------------------
-   1. AUDIO CONTROLLER (reusable class)
+   1. AUDIO CONTROLLER
 --------------------------------------------------------- */
 class AudioController {
     constructor(audioId, buttonId, counterId, maxPlays = 4){
@@ -35,7 +36,6 @@ class AudioController {
     }
 }
 
-// Crear los 9 controladores de audio
 new AudioController("audio1", "playBtn1", "counter1");
 new AudioController("audio2", "playBtn2", "counter2");
 new AudioController("audio3", "playBtn3", "counter3");
@@ -48,43 +48,37 @@ new AudioController("audio9", "playBtn9", "counter9");
 
 
 /* ---------------------------------------------------------
-   2. ANSWER KEY & EXPLANATIONS
+   2. ANSWER KEY (solo para calificar internamente)
 --------------------------------------------------------- */
 const answers = {
-    // ---- Audio 1: A Healthy Lifestyle ----
-    q1: { correct: "b", explanation: "The man chose healthy food because he is trying to take care of his diet — he wants to eat healthy food, not because he dislikes burgers." },
-    q2: { correct: "b", explanation: "The doctor's main advice was to lead a healthy life, which is why the man is changing his eating habits." },
-    q3: { correct: "a", explanation: "The man tries to limit bread and rice. Fruits and vegetables are encouraged, not avoided." },
-
-    // ---- Audio 2: Staying Healthy ----
-    q4: { correct: "a", explanation: "The doctor recommends fresh fruits, vegetables, and whole grains as the best choices for a healthy diet." },
-    q5: { correct: "b", explanation: "Caffeine, sugar, and fatty foods are the things to avoid. Fruits, exercise, and water are all healthy." },
-    q6: { correct: "c", explanation: "The doctor explains that drinking less than one serving of alcohol per day can actually have some benefits." },
-
-    // ---- Audio 3: Stress ----
-    q7: { correct: "b", explanation: "Students are feeling stressed because they have exams coming up soon, not because of travel, teachers, or vacation." },
-    q8: { correct: "c", explanation: "The recommended amount of sleep for students is eight to nine hours per day." },
-    q9: { correct: "c", explanation: "Students should eat nutritious food to manage stress and stay healthy — not sugar, fast food, or only fruits." },
-    q10: { correct: "b", explanation: "The two good types of exercise mentioned are running and walking fast." },
-
-    // ---- Audio 4: AI ----
-    q11: { correct: "c", explanation: "People use AI in daily activities like phones and videos — not only in schools, computers, or jobs." },
-    q12: { correct: "a", explanation: "AI helps students by giving quick information and explanations, not by replacing teachers." },
-    q13: { correct: "c", explanation: "A negative effect is that students may stop thinking for themselves when they rely too much on AI." },
-    q14: { correct: "c", explanation: "Some people worry that AI could replace some jobs in the future." },
-    q15: { correct: "b", explanation: "The main idea of the talk is that AI is useful but must be used carefully." },
-
-    // ---- Matching: Audios 5-9 ----
-    q16: { correct: "d", explanation: "Elizabeth → D. She talks about how social media has both positive and negative effects on social interaction." },
-    q17: { correct: "c", explanation: "Ruth → C. She mentions that social media lets young people express themselves and connect, but can create unrealistic perceptions of others' lives." },
-    q18: { correct: "a", explanation: "Brian → A. He discusses how social media helps teenagers communicate and share ideas, but anonymity and online content can negatively influence them." },
-    q19: { correct: "e", explanation: "Daniel → E. He focuses on how social media helps learning but can distract students from studying." },
-    q20: { correct: "b", explanation: "Sofia → B. She says social media is entertaining but can affect health and habits." }
+    q1: "b",
+    q2: "b",
+    q3: "a",
+    q4: "a",
+    q5: "b",
+    q6: "c",
+    q7: "b",
+    q8: "c",
+    q9: "c",
+    q10: "b",
+    q11: "c",
+    q12: "a",
+    q13: "c",
+    q14: "c",
+    q15: "b",
+    q16: "d",
+    q17: "c",
+    q18: "a",
+    q19: "e",
+    q20: "b"
 };
 
 
 /* ---------------------------------------------------------
    3. QUIZ SUBMISSION HANDLER
+   - Calificación interna (silenciosa)
+   - No muestra feedback ni puntaje al estudiante
+   - Solo guarda en Google Sheets para el profesor
 --------------------------------------------------------- */
 function checkAnswers(event){
     event.preventDefault();
@@ -96,83 +90,78 @@ function checkAnswers(event){
         return;
     }
 
+    // Calificar internamente (el estudiante NO ve el puntaje)
     let score = 0;
-    const total = Object.keys(answers).length;  // 20 preguntas
+    const total = Object.keys(answers).length;
 
     for(const key in answers){
         const radio = document.querySelector('input[name="' + key + '"]:checked');
         const select = document.querySelector('select[name="' + key + '"]');
         const selectedValue = radio ? radio.value : (select ? select.value : "");
 
-        const fb = document.getElementById("fb" + key.substring(1));
-        const correctAnswer = answers[key].correct;
-        const correctDisplay = correctAnswer.toUpperCase();
-        const explanation = answers[key].explanation;
-        fb.style.display = "block";
-
-        if(!selectedValue){
-            fb.className = "feedback incorrect";
-            fb.innerHTML = "<strong>No answer selected</strong>Correct answer: <b>" + correctDisplay + "</b>. " + explanation;
-        } else if(selectedValue === correctAnswer){
+        if(selectedValue === answers[key]){
             score++;
-            fb.className = "feedback correct";
-            fb.innerHTML = "<strong>✓ Correct!</strong>" + explanation;
-        } else {
-            fb.className = "feedback incorrect";
-            fb.innerHTML = "<strong>✗ Incorrect.</strong>The correct answer is <b>" + correctDisplay + "</b>. " + explanation;
         }
     }
 
-    // ============================================================
-    // SISTEMA DE NOTAS:
-    // - El examen tiene 20 puntos posibles
-    // - La nota va de 0 a 100 (20 puntos × 5 = 100)
-    // - El examen vale 10% del semestre
-    // - Por eso: el porcentaje = nota × 10 / 100
-    // ============================================================
-    const nota = score * 5;                              // Nota sobre 100
-    const porcentaje = (nota * 10 / 100).toFixed(1);  // % que vale del 10%
+    // Calcular nota (0-100) y porcentaje (0-10%)
+    const nota = score * 5;
+    const porcentajeSemestre = (score * 10 / 100).toFixed(1);
 
-    displayResult(score, total, nota, porcentaje);
-
-    // Guardar en Google Sheets
+    // Enviar al profesor por Google Sheets
     guardarEnGoogleSheets({
         nombre: nombre,
-        puntaje: score + "/" + total + " — Nota: " + nota + "/100 (" + porcentaje + "% )"
+        puntaje: score + "/" + total + " — score: " + nota + "/100 (" + porcentage + "% )"
     });
 
-    document.getElementById("fb1").scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
-function displayResult(score, total, nota, porcentajeSemestre){
-    const resultEl = document.getElementById("result");
-    // Aprobado con 70 o más (criterio típico en CR; cambia el número si tu colegio usa otro)
-    const passed = nota >= 70;
-
-    resultEl.innerHTML =
-        "Puntos: " + score + " / " + total + "<br>" +
-        "Nota: <strong>" + nota + " / 100</strong><br>" +
-        "Vale: " + porcentajeSemestre + "% ";
-
-    resultEl.style.background = passed ? "var(--success-bg)" : "var(--error-bg)";
-    resultEl.style.color = passed ? "var(--success-dark)" : "var(--error)";
+    // Bloquear el formulario para que no envíen dos veces
+    bloquearExamen();
 }
 
 
 /* ---------------------------------------------------------
-   4. ENVIAR DATOS A GOOGLE SHEETS
+   4. BLOQUEAR EL EXAMEN DESPUÉS DE ENVIAR
+--------------------------------------------------------- */
+function bloquearExamen(){
+    // Deshabilitar todas las preguntas y selects
+    document.querySelectorAll('input[type="radio"], select.match-select').forEach(el => {
+        el.disabled = true;
+    });
+
+    // Deshabilitar todos los botones de play
+    document.querySelectorAll('.play-btn').forEach(btn => {
+        btn.disabled = true;
+    });
+
+    // Cambiar el botón Check Answers
+    const submitBtn = document.querySelector(".submit-btn");
+    if(submitBtn){
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Exam Submitted";
+        submitBtn.style.opacity = "0.6";
+        submitBtn.style.cursor = "not-allowed";
+    }
+
+    // Deshabilitar el campo de nombre
+    const nameInput = document.getElementById("studentName");
+    if(nameInput) nameInput.disabled = true;
+}
+
+
+/* ---------------------------------------------------------
+   5. ENVIAR DATOS A GOOGLE SHEETS
 --------------------------------------------------------- */
 function guardarEnGoogleSheets(datos){
     const statusEl = document.getElementById("saveStatus");
 
     if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PEGA_AQUI")){
         statusEl.className = "save-status error";
-        statusEl.textContent = "⚠ La URL de Google Sheets no está configurada en script.js";
+        statusEl.textContent = "⚠ Error de configuración. Avisa al profesor.";
         return;
     }
 
     statusEl.className = "save-status saving";
-    statusEl.textContent = "💾 Guardando resultados...";
+    statusEl.textContent = "💾 Submitting your exam...";
 
     fetch(APPS_SCRIPT_URL, {
         method: "POST",
@@ -183,7 +172,9 @@ function guardarEnGoogleSheets(datos){
     .then(result => {
         if(result.success){
             statusEl.className = "save-status saved";
-            statusEl.textContent = "✓ Resultados guardados correctamente. ¡Buen trabajo, " + datos.nombre + "!";
+            statusEl.innerHTML = "✓ Your exam has been submitted successfully.<br>Thank you, <strong>" + datos.nombre + "</strong>!";
+            // Scroll al mensaje
+            statusEl.scrollIntoView({ behavior: "smooth", block: "center" });
         } else {
             throw new Error(result.error || "Error desconocido");
         }
@@ -191,12 +182,12 @@ function guardarEnGoogleSheets(datos){
     .catch(err => {
         console.error("Error guardando:", err);
         statusEl.className = "save-status error";
-        statusEl.textContent = "⚠ No se pudieron guardar los resultados. Revisa tu conexión.";
+        statusEl.textContent = "⚠ Could not submit. Please check your internet and try again.";
     });
 }
 
 
 /* ---------------------------------------------------------
-   5. EVENT LISTENER
+   6. EVENT LISTENER
 --------------------------------------------------------- */
 document.getElementById("quizForm").addEventListener("submit", checkAnswers);

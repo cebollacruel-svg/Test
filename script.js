@@ -106,12 +106,12 @@ function checkAnswers(event){
 
     // Calcular nota (0-100) y porcentaje (0-10%)
     const nota = score * 5;
-    const porcentajeSemestre = (score * 10 / 100).toFixed(1);
+    const porcentaje = (nota * 10 / 100).toFixed(1);
 
     // Enviar al profesor por Google Sheets
     guardarEnGoogleSheets({
         nombre: nombre,
-        puntaje: score + "/" + total + " — score: " + nota + "/100 (" + porcentage + "% )"
+        puntaje: score + "/" + total + " — Nota: " + nota + "/100 (" + porcentaje + "% )"
     });
 
     // Bloquear el formulario para que no envíen dos veces

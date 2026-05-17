@@ -104,26 +104,29 @@ function checkAnswers(event) {
     }
 
     let score = 0;
-    const total = 20;
+const total = 20;
 
-    for (const key in answers) {
-        const radio = document.querySelector(`input[name="${key}"]:checked`);
-        const select = document.querySelector(`select[name="${key}"]`);
+for (const key in answers) {
+    const radio = document.querySelector(`input[name="${key}"]:checked`);
+    const select = document.querySelector(`select[name="${key}"]`);
 
-        const selectedValue = radio ? radio.value : (select ? select.value : "");
+    const selectedValue = radio ? radio.value : (select ? select.value : "");
 
-        if (selectedValue === answers[key]) {
-            score++;
-        }
+    if (selectedValue === answers[key]) {
+        score++;
     }
+}
 
-    // 20 pts = nota sobre 10
-    const grade = ((score / total) * 10).toFixed(1);
+// score en escala 100
+const score100 = ((score / total) * 100).toFixed(0);
 
-    guardarEnGoogleSheets({
-        nombre: studentName,
-        puntaje: `${score}/${total} — Grade: ${grade}/10`
-    });
+// porcentaje real del examen (10%)
+const examPercent = ((score / total) * 10).toFixed(1);
+
+guardarEnGoogleSheets({
+    nombre: studentName,
+    puntaje: `${score}/${total} points — ${score100} score — ${examPercent}/10 %`
+});
 
     bloquearExamen();
 }

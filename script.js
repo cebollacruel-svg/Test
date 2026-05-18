@@ -179,16 +179,18 @@ function guardarEnGoogleSheets(datos) {
     statusEl.textContent = "Submitting exam...";
 
     fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(datos)
-    })
-    .then(response => response.text())
-    .then(text => {
-
-        console.log("Respuesta Apps Script:", text);
+    method: "POST",
+    headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(datos)
+})
+.then(response => {
+    console.log("status:", response.status);
+    return response.text();
+})
+.then(text => {
+    console.log("respuesta:", text);
 
         statusEl.className = "save-status saved";
 

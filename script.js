@@ -1,3 +1,5 @@
+alert("SCRIPT UPDATED");
+
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2qTBUwWN5_zsBrGhslaw4asYc0EiY-TohO-DfRrU7aBFg42Zu0xmOkpT0yfmV5O6l/exec";
 
 /* =========================================================
@@ -61,33 +63,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
 /* =========================================================
    3. ANSWER KEY
 ========================================================= */
 const answers = {
-    q1: "b",
-    q2: "b",
-    q3: "a",
-    q4: "a",
-    q5: "b",
-    q6: "c",
-    q7: "b",
-    q8: "c",
-    q9: "c",
-    q10: "b",
-    q11: "c",
-    q12: "a",
-    q13: "c",
-    q14: "c",
-    q15: "b",
-    q16: "d",
-    q17: "c",
-    q18: "a",
-    q19: "e",
-    q20: "b"
+    q1: "b", q2: "b", q3: "a", q4: "a", q5: "b",
+    q6: "c", q7: "b", q8: "c", q9: "c", q10: "b",
+    q11: "c", q12: "a", q13: "c", q14: "c", q15: "b",
+    q16: "d", q17: "c", q18: "a", q19: "e", q20: "b"
 };
-
 
 /* =========================================================
    4. CHECK ANSWERS
@@ -104,39 +88,33 @@ function checkAnswers(event) {
     }
 
     let score = 0;
-const total = 20;
+    const total = 20;
 
-for (const key in answers) {
-    const radio = document.querySelector(`input[name="${key}"]:checked`);
-    const select = document.querySelector(`select[name="${key}"]`);
+    for (const key in answers) {
+        const radio = document.querySelector(`input[name="${key}"]:checked`);
+        const select = document.querySelector(`select[name="${key}"]`);
+        const selectedValue = radio ? radio.value : (select ? select.value : "");
 
-    const selectedValue = radio ? radio.value : (select ? select.value : "");
-
-    if (selectedValue === answers[key]) {
-        score++;
+        if (selectedValue === answers[key]) {
+            score++;
+        }
     }
-}
 
-// score en escala 100
-const score100 = ((score / total) * 100).toFixed(0);
+    const score100 = ((score / total) * 100).toFixed(0);
+    const examPercent = ((score / total) * 10).toFixed(1);
 
-// porcentaje real del examen (10%)
-const examPercent = ((score / total) * 10).toFixed(1);
-
-guardarEnGoogleSheets({
-    nombre: studentName,
-    puntaje: `${score}/${total} points — ${score100} score — ${examPercent}/10 %`
-});
+    guardarEnGoogleSheets({
+        nombre: studentName,
+        puntaje: `${score}/${total} points — ${score100} score — ${examPercent}/10 %`
+    });
 
     bloquearExamen();
 }
-
 
 /* =========================================================
    5. LOCK EXAM
 ========================================================= */
 function bloquearExamen() {
-
     document.querySelectorAll('input[type="radio"], select.match-select').forEach(el => {
         el.disabled = true;
     });
@@ -161,7 +139,6 @@ function bloquearExamen() {
     }
 }
 
-
 /* =========================================================
    6. SAVE TO GOOGLE SHEETS
 ========================================================= */
@@ -169,28 +146,23 @@ function guardarEnGoogleSheets(datos) {
 
     const statusEl = document.getElementById("saveStatus");
 
-    if (!APPS_SCRIPT_URL) {
-        statusEl.className = "save-status error";
-        statusEl.textContent = "Configuration error.";
-        return;
-    }
-
     statusEl.className = "save-status saving";
     statusEl.textContent = "Submitting exam...";
 
     fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-    },
-    body: JSON.stringify(datos)
-})
-.then(response => {
-    console.log("status:", response.status);
-    return response.text();
-})
-.then(text => {
-    console.log("respuesta:", text);
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => {
+        console.log("STATUS:", response.status);
+        return response.text();
+    })
+    .then(text => {
+
+        console.log("SERVER RESPONSE:", text);
 
         statusEl.className = "save-status saved";
 
@@ -199,15 +171,10 @@ function guardarEnGoogleSheets(datos) {
             Thank you, <strong>${datos.nombre}</strong>.
         `;
 
-        statusEl.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
     })
     .catch(error => {
 
-        console.error("Error:", error);
+        console.error("FETCH ERROR:", error);
 
         statusEl.className = "save-status error";
         statusEl.textContent = "Could not submit. Please try again.";

@@ -1,5 +1,3 @@
-alert("SCRIPT UPDATED");
-
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2qTBUwWN5_zsBrGhslaw4asYc0EiY-TohO-DfRrU7aBFg42Zu0xmOkpT0yfmV5O6l/exec";
 
 /* =========================================================
@@ -105,7 +103,8 @@ function checkAnswers(event) {
 
     guardarEnGoogleSheets({
         nombre: studentName,
-        puntaje: `${score}/${total} points — ${score100} score — ${examPercent}/10 %`
+        puntaje: `${score}/${total} points — ${score100} score — ${examPercent}/10 %`,
+        grado: "11"
     });
 
     bloquearExamen();
@@ -156,62 +155,24 @@ function guardarEnGoogleSheets(datos) {
         },
         body: JSON.stringify(datos)
     })
-    .then(response => {
-        console.log("STATUS:", response.status);
-        return response.text();
-    })
-    .then(text => {
+    .then(response => response.json())
+    .then(result => {
+        console.log("SERVER RESPONSE:", result);
 
-        console.log("SERVER RESPONSE:", text);
-
-        statusEl.className = "save-status saved";
-
-        statusEl.innerHTML = `
-            ✓ Exam submitted successfully.<br>
-            Thank you, <strong>${datos.nombre}</strong>.
-        `;
-
+        if (result.success) {
+            statusEl.className = "save-status saved";
+            statusEl.innerHTML = `
+                ✓ Exam submitted successfully.<br>
+                Thank you, <strong>${datos.nombre}</strong>.
+            `;
+            statusEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+            throw new Error(result.error || "Unknown error");
+        }
     })
     .catch(error => {
-
         console.error("FETCH ERROR:", error);
-
         statusEl.className = "save-status error";
-        statusEl.textContent = "Could not submit. Please try again.";
+        statusEl.textContent = "Could not submit: " + error.message;
     });
-}
-function doPost(e) {
-  try {
-    const data = JSON.parse(e.postData.contents);
-
-    const sheet = SpreadsheetApp
-      .getActiveSpreadsheet()
-      .getSheetByName("Hoja 1");
-
-    const row = sheet.getLastRow() + 1;
-
-    sheet.getRange(row, 4).setValue(data.nombre);
-    sheet.getRange(row, 5).setValue(data.puntaje);
-
-    return ContentService
-      .createTextOutput(JSON.stringify({ success: true }))
-      .setMimeType(ContentService.MimeType.JSON);
-
-  } catch(err) {
-
-    Logger.log("ERROR: " + err.toString());
-
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        success: false,
-        error: err.toString()
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function doGet() {
-  return ContentService
-    .createTextOutput("API funcionando")
-    .setMimeType(ContentService.MimeType.TEXT);
 }

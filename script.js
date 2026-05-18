@@ -180,3 +180,38 @@ function guardarEnGoogleSheets(datos) {
         statusEl.textContent = "Could not submit. Please try again.";
     });
 }
+function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+
+    const sheet = SpreadsheetApp
+      .getActiveSpreadsheet()
+      .getSheetByName("Hoja 1");
+
+    const row = sheet.getLastRow() + 1;
+
+    sheet.getRange(row, 4).setValue(data.nombre);
+    sheet.getRange(row, 5).setValue(data.puntaje);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch(err) {
+
+    Logger.log("ERROR: " + err.toString());
+
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        success: false,
+        error: err.toString()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet() {
+  return ContentService
+    .createTextOutput("API funcionando")
+    .setMimeType(ContentService.MimeType.TEXT);
+}

@@ -185,34 +185,29 @@ function guardarEnGoogleSheets(datos) {
         },
         body: JSON.stringify(datos)
     })
-    .then(response => response.json())
-    .then(result => {
+    .then(response => response.text())
+    .then(text => {
 
-        if (result.success) {
+        console.log("Respuesta Apps Script:", text);
 
-            statusEl.className = "save-status saved";
+        statusEl.className = "save-status saved";
 
-            statusEl.innerHTML = `
-                ✓ Exam submitted successfully.<br>
-                Thank you, <strong>${datos.nombre}</strong>.
-            `;
+        statusEl.innerHTML = `
+            ✓ Exam submitted successfully.<br>
+            Thank you, <strong>${datos.nombre}</strong>.
+        `;
 
-            statusEl.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-
-        } else {
-            throw new Error(result.error || "Unknown error");
-        }
+        statusEl.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
 
     })
     .catch(error => {
 
-        console.error(error);
+        console.error("Error:", error);
 
         statusEl.className = "save-status error";
-
         statusEl.textContent = "Could not submit. Please try again.";
     });
 }

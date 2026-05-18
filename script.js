@@ -102,9 +102,10 @@ function checkAnswers(event) {
     const examPercent = ((score / total) * 10).toFixed(1);
 
     guardarEnGoogleSheets({
-        nombre: studentName,
-        puntaje: `${score}/${total} points — ${score100} score — ${examPercent}/10 %`,
-        grado: "11"
+    exam: "11th",
+    nombre: studentName,
+    puntaje: `${score}/${total} points — ${score100} score — ${examPercent}/10 %`
+});
     });
 
     bloquearExamen();
